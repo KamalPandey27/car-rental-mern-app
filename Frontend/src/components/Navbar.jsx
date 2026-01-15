@@ -23,7 +23,7 @@ function Navbar() {
 
   return (
     <>
-      <header className="flex items-center justify-between px-6 md:px-16 lg:px-24 xl:px-32 py-4 text-gray-600 border-b border-borderColor relative transition-all bg-light">
+      <header className="flex items-center justify-between px-6 md:px-16 lg:px-24 xl:px-32 py-4 text-gray-600 border-b border-borderColor fixed top-0 z-50 h-18.25 transition-all bg-light w-full">
         <nav className="flex items-center justify-between w-full">
           <div>
             <Link to="/">

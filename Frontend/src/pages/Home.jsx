@@ -11,7 +11,7 @@ function Home() {
 
   return (
     <>
-      <main className=" overflow-x-hidden">
+      <main className="overflow-x-hidden pt-18.25">
         {/* Hero section  */}
         <section className="bg-light min-h-screen w-full flex justify-center py-3 gap-5 items-center flex-col ">
           <div className="text-4xl md:text-5xl font-semibold text-center my-5">
