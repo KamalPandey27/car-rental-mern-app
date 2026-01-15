@@ -1,0 +1,49 @@
+From  this project what i learn 
+1) Make always small components
+2) use this in layout   const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth", // remove if you want instant
+    });
+  }, [pathname]);
+
+3) if i want to check the url is what and which page acuur  
+ const isOwnerPath = useLocation().pathname.startsWith("/owner");
+
+ 4) if true then do other nothing return &&
+
+ 5) dummyCarData.slice(0, 6) use this to limit an array
+ 
+ 6) to make a array and fill value then used it 
+  {Array(5).fill(0).map((_, i) => (<img src={assets.star_icon} alt="star_icon" key={i} />))}
+  
+  7) useRef used to manipulate dom 
+   const [open, setOpen] = useState(false);
+  const menuRef = useRef(null);
+   useEffect(() => {
+    function handleClickOutside(event) {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setOpen(false);
+      }
+    }
+
+    if (open) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [open]);
+
+8) new Date().toISOString().split("T")[0] 
+
+9) const car = dummyCarData.find((item) => String(item._id) === id);
+.find():
+loops through the array
+returns the FIRST matching element
+stops immediately after finding it
+
+10) 
