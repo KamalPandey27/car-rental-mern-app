@@ -48,6 +48,7 @@ function Home() {
                   id="pickupdate"
                   className="text-gray-400"
                   min={new Date().toISOString().split("T")[0]}
+                  required
                 />
               </div>
               <div className="flex flex-col gap-3 justify-center items-center">
@@ -57,6 +58,7 @@ function Home() {
                   id="returndate"
                   min={new Date().toISOString().split("T")[0]}
                   className="text-gray-400"
+                  required
                 />
               </div>
             </div>
@@ -93,7 +95,8 @@ function Home() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-18">
             {dummyCarData?.map((item) => {
               return (
-                <div
+                <Link
+                  to={`/car-details/${item._id}`}
                   className="group rounded-xl overflow-hidden shadow-lg hover:-translate-y-1 transition-all duration-500 cursor-pointer"
                   key={item._id}
                 >
@@ -159,7 +162,7 @@ function Home() {
                       </div>
                     </div>
                   </div>
-                </div>
+                </Link>
               );
             })}
           </div>

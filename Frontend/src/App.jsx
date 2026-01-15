@@ -7,6 +7,7 @@ import {
   createRoutesFromElements,
   Route,
 } from "react-router-dom";
+import CarDetails from "./components/CarDetails";
 const App = () => {
   const router = createBrowserRouter(
     createRoutesFromElements(
@@ -14,8 +15,9 @@ const App = () => {
         <Route index element={<Home />} />
         <Route path="cars" element={<Cars />} />
         <Route path="mybookings" element={<MyBookings />} />
-        <Route path="dashboard" element={<Dashboard />} />
+        <Route path="owner" element={<Dashboard />} />
         <Route path="signup" element={<SignUp />} />
+        <Route path="car-details/:id" element={<CarDetails />} />
       </Route>
     )
   );

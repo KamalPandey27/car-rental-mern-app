@@ -54,7 +54,7 @@ function Footer() {
         </div>
 
         <div className="my-5 w-full flex items-center justify-between text-gray-500 sm:text-[15px] text-[12px]">
-          <span>© 2026 Brand. All rights reserved.</span>
+          <span>© {new Date().getFullYear()} Brand. All rights reserved.</span>
           <div className="flex gap-3">
             <span>Privacy</span>
             <span>|</span>

@@ -23,7 +23,7 @@ function Navbar() {
 
   return (
     <>
-      <header className="flex items-center justify-between px-6 md:px-16 lg:px-24 xl:px-32 py-4 text-gray-600 border-b border-borderColor fixed top-0 z-50 h-18.25 transition-all bg-light w-full">
+      <header className="flex items-center justify-between px-6 md:px-16 lg:px-24 xl:px-32 py-4 border-b border-borderColor fixed top-0 z-50 h-18.25 transition-all bg-light w-full">
         <nav className="flex items-center justify-between w-full">
           <div>
             <Link to="/">
@@ -35,13 +35,34 @@ function Navbar() {
 
           <ul className=" hidden md:flex items-center justify-between xl:gap-7 md:gap-5  text-[16px]">
             <li>
-              <NavLink to="/">Home</NavLink>
+              <NavLink
+                to="/"
+                className={({ isActive }) =>
+                  isActive ? "text-black" : " text-gray-600"
+                }
+              >
+                Home
+              </NavLink>
             </li>
             <li>
-              <NavLink to="/cars">Cars</NavLink>
+              <NavLink
+                to="/cars"
+                className={({ isActive }) =>
+                  isActive ? "text-black" : " text-gray-600"
+                }
+              >
+                Cars
+              </NavLink>
             </li>
             <li>
-              <NavLink to="/mybookings">My Bookings</NavLink>
+              <NavLink
+                to="/mybookings"
+                className={({ isActive }) =>
+                  isActive ? "text-black" : " text-gray-600"
+                }
+              >
+                My Bookings
+              </NavLink>
             </li>
             <li className="hidden lg:flex items-center text-sm gap-2 border border-borderColor px-3 rounded-full max-w-56">
               <input
@@ -52,13 +73,20 @@ function Navbar() {
               <img src={assets.search_icon} alt="search" />
             </li>
             <li>
-              <NavLink to="/dashboard">Dashboard</NavLink>
+              <NavLink
+                to="/owner"
+                className={({ isActive }) =>
+                  isActive ? "text-black" : " text-gray-600"
+                }
+              >
+                Dashboard
+              </NavLink>
             </li>
             <li>
               <NavLink to="/signup">
                 <button
                   type="button"
-                  className="cursor-pointer px-8 py-2 bg-primary hover:bg-primary-dull transition-all text-white rounded-lg"
+                  className="cursor- px-8 py-2 bg-primary hover:bg-primary-dull transition-all text-white rounded-lg"
                 >
                   SignUp
                 </button>
@@ -101,7 +129,7 @@ function Navbar() {
               <img src={assets.search_icon} alt="search" />
             </li>
             <li>
-              <NavLink to="/dashboard">Dashboard</NavLink>
+              <NavLink to="/owner">Dashboard</NavLink>
             </li>
             <li>
               <NavLink to="/signup">

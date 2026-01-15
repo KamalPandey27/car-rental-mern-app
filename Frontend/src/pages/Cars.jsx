@@ -1,5 +1,6 @@
 import React from "react";
 import { assets, dummyCarData } from "../assets/assets";
+import { Link } from "react-router-dom";
 function Cars() {
   return (
     <>
@@ -30,7 +31,8 @@ function Cars() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-10 px-6 md:px-16 lg:px-24 xl:px-32">
           {dummyCarData?.map((item) => {
             return (
-              <div
+              <Link
+                to={`/car-details/${item._id}`}
                 className="group rounded-xl overflow-hidden shadow-lg hover:-translate-y-1 transition-all duration-500 cursor-pointer"
                 key={item._id}
               >
@@ -94,7 +96,7 @@ function Cars() {
                     </div>
                   </div>
                 </div>
-              </div>
+              </Link>
             );
           })}
         </div>
