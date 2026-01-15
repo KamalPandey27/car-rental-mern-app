@@ -173,8 +173,8 @@ function Home() {
 
         {/* reviews section */}
 
-        <section className=" flex flex-col md:flex-row md:items-start items-center justify-between px-8 md:pl-14 pt-10 bg-linear-to-r from-[#0558FE] to-[#A9CFFF] max-w-6xl mx-3 md:mx-auto rounded-2xl overflow-hidden md:mt-20 my-10">
-          <div className="text-white">
+        <section className=" flex flex-col md:flex-row md:items-start items-center justify-between px-8 md:pl-14 md:pb-10 mb-auto pt-10 bg-linear-to-r from-[#0558FE] to-[#A9CFFF] max-w-6xl mx-3 md:mx-auto rounded-2xl overflow-hidden md:mt-20 my-10">
+          <div className="text-white flex flex-col gap-2 items-start">
             <h2 className="text-3xl font-medium">Do You Own a Luxury Car?</h2>
             <p className="mt-2">
               Monetize your vehicle effortlessly by listing it on CarRental.
@@ -190,7 +190,11 @@ function Home() {
               List your car
             </button>
           </div>
-          <img src={assets.banner_car_image} alt="carBanner" />
+          <img
+            src={assets.banner_car_image}
+            alt="carBanner"
+            className="lg:w-auto md:w-[50%]"
+          />
         </section>
 
         {/* Coustomer reviews */}
