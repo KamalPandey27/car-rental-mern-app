@@ -1,9 +1,55 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { assets, dummyCarData } from "../assets/assets";
+import { assets } from "../assets/assets";
+import { useContext } from "react";
+import { BookContext } from "../context/BookContext";
+import { useNavigate } from "react-router-dom";
 function CarDetails() {
   const { id } = useParams();
-  const car = dummyCarData.find((item) => String(item._id) === id);
+  const { setBookingCar, carData, setCarData } = useContext(BookContext);
+  const [pickupDate, setPickupDate] = useState("");
+  const [returnDate, setReturnDate] = useState("");
+
+  const car = carData.find((item) => String(item._id) === id);
+
+  const navigate = useNavigate();
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (!pickupDate || !returnDate) {
+      alert("Please select both dates");
+      return;
+    }
+
+    if (new Date(returnDate) < new Date(pickupDate)) {
+      alert("Please select correct return date");
+      return;
+    }
+
+    // JavaScript converts the string into a Date object:
+    // JavaScript internally compares timestamps (milliseconds since Jan 1, 1970)
+
+    if (!car.isAvaliable) {
+      alert("Car is already booked");
+      return;
+    }
+
+    const days = (new Date(returnDate) - new Date(pickupDate)) / 86400000;
+    const TotalDays = Math.max(1, days);
+
+    setBookingCar((prev) => [
+      ...prev,
+      { ...car, pickupDate, returnDate, daysBooked: TotalDays },
+    ]);
+
+    setCarData((prev) =>
+      prev.map((item) =>
+        item._id === car._id ? { ...item, isAvaliable: false } : item
+      )
+    );
+
+    navigate("/mybookings");
+  };
 
   return (
     <>
@@ -99,28 +145,39 @@ function CarDetails() {
             </span>
             <span className="">per day</span>
           </div>
-          <form action="" className="flex flex-col gap-5">
+          <form
+            action=""
+            className="flex flex-col gap-5"
+            onSubmit={handleSubmit}
+          >
             <div className="flex flex-col gap-2">
               <label htmlFor="pickupDate">Pickup Date</label>
               <input
                 type="date"
-                name=""
+                name="pickupDate"
                 id="pickupDate"
                 className="p-2 border border-gray-400/90 outline-none rounded-lg"
                 required
+                min={new Date().toISOString().split("T")[0]}
+                onChange={(e) => setPickupDate(e.target.value)}
               />
             </div>
             <div className="flex flex-col gap-2">
               <label htmlFor="returnDate">Return Date</label>
               <input
                 type="date"
-                name=""
+                name="returnDate"
                 id="returnDate"
                 className="p-2 border border-gray-400/90 outline-none rounded-lg"
                 required
+                min={new Date().toISOString().split("T")[0]}
+                onChange={(e) => setReturnDate(e.target.value)}
               />
             </div>
-            <button className="w-full bg-primary hover:bg-primary-dull transition-all py-3 font-medium text-white rounded-xl cursor-pointer">
+            <button
+              className="w-full bg-primary hover:bg-primary-dull transition-all py-3 font-medium text-white rounded-xl cursor-pointer"
+              type="submit"
+            >
               Book Now
             </button>
           </form>
@@ -132,3 +189,17 @@ function CarDetails() {
 }
 
 export default CarDetails;
+
+//  {
+//    !car.isAvaliable && (
+//      <div className="fixed top-4 left-1/2 -translate-x-1/2 z-50 flex">
+//        <p className="bg-white text-center px-4 py-3 rounded-lg shadow-lg flex gap-2">
+//          <span className="bg-red-600 text-white w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold leading-none">
+//            ✕
+//          </span>
+
+//          <span> Car is not available</span>
+//        </p>
+//      </div>
+//    );
+//  }
