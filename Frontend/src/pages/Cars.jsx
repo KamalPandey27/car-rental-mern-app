@@ -1,8 +1,10 @@
 import React from "react";
-import { assets, dummyCarData } from "../assets/assets";
-
+import { assets } from "../assets/assets";
+import { useContext } from "react";
+import { BookContext } from "../context/BookContext";
 import CarCard from "../components/CarCard";
 function Cars() {
+  const { carData } = useContext(BookContext);
   return (
     <>
       <section className="flex flex-col  w-full pt-18.25">
@@ -27,10 +29,10 @@ function Cars() {
           </div>
         </div>
         <div className="text-gray-500/90 mt-10 ml-35">
-          Showing {dummyCarData.length} Cars
+          Showing {carData.length} Cars
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-10 px-6 md:px-16 lg:px-24 xl:px-32">
-          {dummyCarData?.map((item) => (
+          {carData?.map((item) => (
             <CarCard item={item} />
           ))}
         </div>
