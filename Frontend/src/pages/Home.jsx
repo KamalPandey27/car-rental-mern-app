@@ -1,10 +1,12 @@
 import React from "react";
-import { assets, dummyCarData } from "../assets/assets";
+import { assets } from "../assets/assets";
 import { Link } from "react-router-dom";
 import CarCard from "../components/CarCard";
 import Hero from "../components/Hero";
-
+import { useContext } from "react";
+import { BookContext } from "../context/BookContext";
 function Home() {
+  const { carData } = useContext(BookContext);
   return (
     <>
       <main className="overflow-x-hidden pt-18.25">
@@ -22,7 +24,7 @@ function Home() {
             </span>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-18">
-            {dummyCarData.slice(0, 6)?.map((item) => (
+            {carData.slice(0, 6)?.map((item) => (
               <CarCard item={item} />
             ))}
           </div>
