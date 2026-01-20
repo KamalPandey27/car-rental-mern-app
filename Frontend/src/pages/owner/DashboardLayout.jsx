@@ -5,11 +5,13 @@ import SideBarOwner from "../../components/owner/SideBarOwner";
 function DashboardLayout() {
   return (
     <>
-      <div className="flex flex-col">
+      <div className="flex flex-col w-full">
         <NavbarOwner />
-        <div className="flex">
-          <SideBarOwner />
-          <main>
+        <div className="flex w-full">
+          <aside>
+            <SideBarOwner />
+          </aside>
+          <main className="px-4 pt-10 md:px-10  min-w-0">
             <Outlet />
           </main>
         </div>

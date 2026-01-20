@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import { NavLink, Link } from "react-router-dom";
 import { assets } from "../assets/assets";
+import { SignUp } from "../pages";
 function Navbar() {
   const [open, setOpen] = useState(false);
   const menuRef = useRef(null);
+  const [showSignUp, setShowSignUp] = useState(false);
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -83,14 +85,16 @@ function Navbar() {
               </NavLink>
             </li>
             <li>
-              <NavLink to="/signup">
+              <div>
                 <button
+                  onClick={() => setShowSignUp(true)}
                   type="button"
-                  className="cursor- px-8 py-2 bg-primary hover:bg-primary-dull transition-all text-white rounded-lg"
+                  className="cursor-pointer px-8 py-2 bg-primary hover:bg-primary-dull transition-all text-white rounded-lg"
                 >
                   SignUp
                 </button>
-              </NavLink>
+                {showSignUp && <SignUp onClose={() => setShowSignUp(false)} />}
+              </div>
             </li>
           </ul>
 
@@ -132,14 +136,16 @@ function Navbar() {
               <NavLink to="/owner">Dashboard</NavLink>
             </li>
             <li>
-              <NavLink to="/signup">
+              <div>
                 <button
+                  onClick={() => setShowSignUp(true)}
                   type="button"
                   className="cursor-pointer px-8 py-2 bg-primary hover:bg-primary-dull transition-all text-white rounded-lg"
                 >
                   SignUp
                 </button>
-              </NavLink>
+                {showSignUp && <SignUp onClose={() => setShowSignUp(false)} />}
+              </div>
             </li>
 
             <button

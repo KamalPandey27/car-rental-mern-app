@@ -23,7 +23,6 @@ const App = () => {
         <Route index element={<Home />} />
         <Route path="cars" element={<Cars />} />
         <Route path="mybookings" element={<MyBookings />} />
-        <Route path="signup" element={<SignUp />} />
         <Route path="car-details/:id" element={<CarDetails />} />
 
         {/* OWNER DASHBOARD (NESTED ROUTES) */}
@@ -34,8 +33,8 @@ const App = () => {
           <Route path="manage-cars" element={<ManageCars />} />
           <Route path="manage-bookings" element={<OwnerManageBookings />} />
         </Route>
-      </Route>
-    )
+      </Route>,
+    ),
   );
   return <RouterProvider router={router} />;
 };
