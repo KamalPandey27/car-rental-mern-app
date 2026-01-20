@@ -1,7 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { assets } from "../../assets/assets";
 
 function AddCar() {
+  const [carImage, setCarImage] = useState("");
+  const uploadCarImage = (e) => {
+    const car = URL.createObjectURL(e.target.files[0]);
+    setCarImage(car);
+  };
   return (
     <section className="pb-10">
       <div className="mb-10">
@@ -15,13 +20,19 @@ function AddCar() {
         <div className="flex gap-5 items-center">
           <label htmlFor="car-image">
             <img
-              src={assets.upload_icon}
+              src={carImage || assets.upload_icon}
               alt="upload_icon"
               className="w-25 h-15 cursor-pointer"
             />
-            <input type="file" id="car-image" accept="image/*" hidden />
+            <input
+              type="file"
+              id="car-image"
+              accept="image/*"
+              hidden
+              onChange={uploadCarImage}
+            />
           </label>
-          <p class="text-sm text-gray-500">Upload a picture of your car</p>
+          <p className="text-sm text-gray-500">Upload a picture of your car</p>
         </div>
         <div className="grid sm:grid-cols-2 grid-cols-1 gap-3">
           <div className="flex flex-col gap-2">
