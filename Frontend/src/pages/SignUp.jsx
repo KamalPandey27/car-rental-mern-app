@@ -1,7 +1,35 @@
 import React, { useState } from "react";
-
+import axios from "axios";
 function SignUp({ onClose }) {
   const [loginPage, setLoginPage] = useState(false);
+  const [userCreated, setUserCreated] = useState("");
+  const [formData, setFormData] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const url = loginPage ? "/api/v1/user/login" : "/api/v1/user/signup";
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_BASE_URL}${url}`,
+        formData,
+      );
+      if (response.data.success === true) {
+        setUserCreated(response.data.data.username);
+        setLoginPage(true);
+        setFormData({
+          username: "",
+          email: "",
+          password: "",
+        });
+      }
+    } catch (error) {
+      console.error(error.response?.data?.message || "Something went wrong");
+    }
+  };
 
   return (
     <section
@@ -13,39 +41,52 @@ function SignUp({ onClose }) {
         className="bg-white  flex items-center justify-center flex-col rounded-lg px-8 py-12 gap-5 w-90"
       >
         <div className="md:text-xl text-lg font-semibold flex justify-center gap-1 text-gray-700  w-full">
-          <p className="text-primary">User</p> {loginPage ? "Login" : "Sign Up"}
+          <p className="text-primary">
+            {loginPage ? userCreated || "User" : "User"}
+          </p>{" "}
+          {loginPage ? "Login" : "Sign Up"}
         </div>
-        <form className="flex flex-col gap-3 text-gray-700/90 w-full">
-          {loginPage ? (
-            ""
-          ) : (
+        <form
+          className="flex flex-col gap-3 text-gray-700/90 w-full"
+          onSubmit={handleSubmit}
+        >
+          {!loginPage && (
             <div className="flex flex-col gap-1">
-              <label htmlFor="name">Name</label>
+              <label htmlFor="username">Name</label>
               <input
+                onChange={(e) =>
+                  setFormData({ ...formData, username: e.target.value })
+                }
+                value={formData.username}
                 type="text"
-                name=""
-                id=""
+                name="username"
                 placeholder="type here"
                 className="placeholder:text-gray-500/90 outline-none border border-gray-400/90 rounded p-2"
               />
             </div>
           )}
           <div className="flex flex-col gap-1">
-            <label htmlFor="Email">Email</label>
+            <label htmlFor="email">Email</label>
             <input
+              onChange={(e) =>
+                setFormData({ ...formData, email: e.target.value })
+              }
+              value={formData.email}
               type="email"
-              name=""
-              id="Email"
+              name="email"
               placeholder="type here"
               className="placeholder:text-gray-500/90 outline-none border border-gray-400/90 rounded p-2"
             />
           </div>
           <div className="flex flex-col gap-1">
-            <label htmlFor="Password">Password</label>
+            <label htmlFor="password">Password</label>
             <input
+              onChange={(e) =>
+                setFormData({ ...formData, password: e.target.value })
+              }
+              value={formData.password}
               type="password"
-              name=""
-              id="Password"
+              name="password"
               placeholder="type here"
               className="placeholder:text-gray-500/90 outline-none border border-gray-400/90 rounded p-2"
             />
