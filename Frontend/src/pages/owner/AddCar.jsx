@@ -110,7 +110,7 @@ function AddCar() {
               className="p-1.5 outline-none border border-gray-500/90 rounded text-sm "
             >
               <option value="FuelType">Select a Fuel Type</option>
-              <option value="Gas">Gas</option>
+              <option value="Gas">Cng</option>
               <option value="Diesal">Diesal</option>
               <option value="Petrol">Petrol</option>
               <option value="Electric">Electric</option>
