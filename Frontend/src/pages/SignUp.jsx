@@ -1,34 +1,19 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 
 function SignUp({ onClose }) {
   const [loginPage, setLoginPage] = useState(false);
-  const loginSignUpPage = useRef(null);
-  useEffect(() => {
-    const handlePageClose = (event) => {
-      if (
-        loginSignUpPage.current &&
-        !loginSignUpPage.current.contains(event.target)
-      ) {
-        onClose();
-      }
-    };
-
-    document.addEventListener("mousedown", handlePageClose);
-
-    return () => {
-      document.removeEventListener("mousedown", handlePageClose);
-    };
-  }, [onClose]);
 
   return (
-    <section className="fixed inset-0 z-999 flex items-center justify-center bg-black/40">
+    <section
+      className="fixed inset-0 z-999 flex items-center justify-center bg-black/40"
+      onClick={onClose}
+    >
       <div
-        ref={loginSignUpPage}
-        onMouseDown={(e) => e.stopPropagation()}
+        onClick={(e) => e.stopPropagation()}
         className="bg-white  flex items-center justify-center flex-col rounded-lg px-8 py-12 gap-5 w-90"
       >
         <div className="md:text-xl text-lg font-semibold flex justify-center gap-1 text-gray-700  w-full">
-          <p className="text-primary">User</p> Sign Up
+          <p className="text-primary">User</p> {loginPage ? "Login" : "Sign Up"}
         </div>
         <form className="flex flex-col gap-3 text-gray-700/90 w-full">
           {loginPage ? (
