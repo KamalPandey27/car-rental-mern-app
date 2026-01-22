@@ -1,7 +1,5 @@
 import dotenv from "dotenv";
-dotenv.config({
-  path: "./.env",
-}); // 👈 MUST be at the very top
+dotenv.config(); // 👈 MUST be at the very top
 
 import connectDB from "./db/index.js";
 import app from "./app.js";

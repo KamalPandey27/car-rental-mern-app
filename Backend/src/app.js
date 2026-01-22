@@ -1,10 +1,14 @@
+import dotenv from "dotenv";
+dotenv.config(); // 👈 MUST be at the very top
+
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 const app = express();
+
 app.use(
   cors({
-    origin: process.env.CORS_ORIGIN || "http://localhost:5173",
+    origin: process.env.CORS_ORIGIN,
     credentials: true,
   }),
 );
