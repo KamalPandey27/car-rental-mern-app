@@ -120,6 +120,7 @@ const logout = asyncHandler(async (req, res) => {
 const getUserData = asyncHandler(async (req, res) => {
   const accessToken = req.cookies?.accessToken;
   const refreshToken = req.cookies?.refreshToken;
+  
   try {
     // 1️⃣ Try access token
     const decoded = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET);
