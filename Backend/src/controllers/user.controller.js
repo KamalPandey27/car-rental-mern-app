@@ -1,5 +1,3 @@
-import dotenv from "dotenv";
-dotenv.config(); // 👈 MUST be at the very top
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import { ApiError } from "../utils/apiError.js";
@@ -120,7 +118,7 @@ const logout = asyncHandler(async (req, res) => {
 const getUserData = asyncHandler(async (req, res) => {
   const accessToken = req.cookies?.accessToken;
   const refreshToken = req.cookies?.refreshToken;
-  
+
   try {
     // 1️⃣ Try access token
     const decoded = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET);
