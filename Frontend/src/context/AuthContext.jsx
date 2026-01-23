@@ -1,25 +1,28 @@
-import { useEffect } from "react";
-import { createContext, useState } from "react";
-import axios from "axios";
+import { createContext, useEffect, useState } from "react";
+import api from "../api/axios";
+
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null); // null = not logged in
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
-    axios
-      .get(`${import.meta.env.VITE_API_BASE_URL}/api/v1/user/getUserData`, {
-        withCredentials: true,
-      })
+    api
+      .get("/api/v1/user/getUserData")
       .then((response) => {
         setUser(response.data.data);
       })
-      .catch((error) => {
+      .catch(() => {
         setUser(null);
-        console.log(error.response?.data?.message);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }, []);
+
   return (
-    <AuthContext.Provider value={{ user, setUser }}>
+    <AuthContext.Provider value={{ user, setUser, loading }}>
       {children}
     </AuthContext.Provider>
   );

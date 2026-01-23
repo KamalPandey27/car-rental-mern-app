@@ -1,11 +1,13 @@
 import React, { useContext, useState } from "react";
-import axios from "axios";
-import { AuthContext } from "../context/authContext";
 
+import { AuthContext } from "../context/AuthContext";
+import Loader from "../components/Loader";
+import api from "../api/axios";
 function SignUp({ onClose }) {
   const { setUser } = useContext(AuthContext);
   const [loginPage, setLoginPage] = useState(false);
   const [userDetails, setUserDetails] = useState("");
+  const [loginSignUploading, setloginSignUploading] = useState(false);
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -15,16 +17,12 @@ function SignUp({ onClose }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      setloginSignUploading(true);
       const url = loginPage ? "/api/v1/user/login" : "/api/v1/user/signup";
-      const response = await axios.post(
-        `${import.meta.env.VITE_API_BASE_URL}${url}`,
-        formData,
-        {
-          withCredentials: true,
-          // “Bhai cookies accept kar aur future requests mein bhejna”
-        },
-      );
-
+      const response = await api.post(`${url}`, formData, {
+        withCredentials: true,
+        // “Bhai cookies accept kar aur future requests mein bhejna”
+      });
       if (response.data.success === true) {
         setUser(response.data.data);
         setFormData({
@@ -42,9 +40,13 @@ function SignUp({ onClose }) {
         email: "",
         password: "",
       });
+    } finally {
+      setloginSignUploading(false);
     }
   };
-
+  if (loginSignUploading) {
+    return <Loader />;
+  }
   return (
     <section
       className="fixed inset-0 z-999 flex items-center justify-center bg-black/40"
@@ -71,6 +73,7 @@ function SignUp({ onClose }) {
                 value={formData.username}
                 type="text"
                 name="username"
+                required
                 placeholder="type here"
                 className="placeholder:text-gray-500/90 outline-none border border-gray-400/90 rounded p-2"
               />
@@ -85,6 +88,7 @@ function SignUp({ onClose }) {
               value={formData.email}
               type="email"
               name="email"
+              required
               placeholder="type here"
               className="placeholder:text-gray-500/90 outline-none border border-gray-400/90 rounded p-2"
             />
@@ -98,6 +102,7 @@ function SignUp({ onClose }) {
               value={formData.password}
               type="password"
               name="password"
+              required
               placeholder="type here"
               className="placeholder:text-gray-500/90 outline-none border border-gray-400/90 rounded p-2"
             />
@@ -106,7 +111,10 @@ function SignUp({ onClose }) {
             {loginPage ? "Create an account?" : "Already have account?"}
             <span
               className="text-primary cursor-pointer"
-              onClick={() => setLoginPage((prev) => !prev)}
+              onClick={() => {
+                setLoginPage((prev) => !prev);
+                setUserDetails("");
+              }}
             >
               click here
             </span>
@@ -131,7 +139,7 @@ function SignUp({ onClose }) {
           {loginPage ? (
             <div className="text-center text-red-600 mt-2">{userDetails}</div>
           ) : (
-            ""
+            <div className="text-center text-red-600 mt-2">{userDetails}</div>
           )}
         </form>
       </div>

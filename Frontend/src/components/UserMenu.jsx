@@ -1,24 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
 import { assets } from "../assets/assets";
-import axios from "axios";
+
 import { AuthContext } from "../context/authContext";
 import { useContext } from "react";
+import Loader from "../components/Loader";
+import api from "../api/axios";
+
 function UserMenu({ showUserMenu, setshowUserMenu }) {
   const { setUser } = useContext(AuthContext);
+  const [loggingOut, setLoggingOut] = useState(false);
   const handleLogout = async () => {
     try {
-      await axios.post(
-        `${import.meta.env.VITE_API_BASE_URL}/api/v1/user/logout`,
-        {},
-        { withCredentials: true },
-      );
-      alert("user logout");
+      setLoggingOut(true);
+      await api.post(`/api/v1/user/logout`, {}, { withCredentials: true });
       setUser(null);
       setshowUserMenu();
     } catch (error) {
       console.log("logout failed", error);
+    } finally {
+      setLoggingOut(false);
     }
   };
+
+  if (loggingOut) {
+    return <Loader />;
+  }
 
   return (
     <div

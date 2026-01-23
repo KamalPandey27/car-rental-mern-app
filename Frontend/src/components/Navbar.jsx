@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useContext } from "react";
 import { NavLink, Link } from "react-router-dom";
 import { assets } from "../assets/assets";
 import { SignUp } from "../pages";
-import { AuthContext } from "../context/authContext";
+import { AuthContext } from "../context/AuthContext";
 import UserMenu from "./UserMenu";
 function Navbar() {
   const { user } = useContext(AuthContext);
@@ -155,14 +155,30 @@ function Navbar() {
               <NavLink to="/owner">Dashboard</NavLink>
             </li>
             <li>
+              <UserMenu
+                showUserMenu={showUserMenu}
+                setshowUserMenu={() => setshowUserMenu(false)}
+              />
+
               <div>
-                <button
-                  onClick={() => setShowSignUp(true)}
-                  type="button"
-                  className="cursor-pointer px-8 py-2 bg-primary hover:bg-primary-dull transition-all text-white rounded-lg"
-                >
-                  SignUp
-                </button>
+                {user ? (
+                  <button
+                    onClick={() => setshowUserMenu(true)}
+                    type="button"
+                    className="cursor-pointer px-8 py-2 bg-primary hover:bg-primary-dull transition-all text-white rounded-lg"
+                  >
+                    {String(user.username).toUpperCase()}
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => setShowSignUp(true)}
+                    type="button"
+                    className="cursor-pointer px-8 py-2 bg-primary hover:bg-primary-dull transition-all text-white rounded-lg"
+                  >
+                    SignUp
+                  </button>
+                )}
+
                 {showSignUp && <SignUp onClose={() => setShowSignUp(false)} />}
               </div>
             </li>

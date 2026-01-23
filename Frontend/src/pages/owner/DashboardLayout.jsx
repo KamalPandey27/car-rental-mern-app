@@ -8,7 +8,7 @@ function DashboardLayout() {
       <div className="flex flex-col w-full">
         <NavbarOwner />
         <div className="flex w-full">
-          <aside>
+          <aside className="h-screen">
             <SideBarOwner />
           </aside>
           <main className="px-4 pt-10 md:px-10  min-w-0">

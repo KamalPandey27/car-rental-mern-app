@@ -4,6 +4,8 @@ import { ApiError } from "../utils/apiError.js";
 import { ApiResponse } from "../utils/apiResponse.js";
 import { User } from "../models/user.models.js";
 import jwt from "jsonwebtoken";
+import { v2 as cloudinary } from "cloudinary";
+
 const option = {
   httpOnly: true,
   secure: process.env.NODE_ENV === "production",
@@ -158,4 +160,39 @@ const getUserData = asyncHandler(async (req, res) => {
   }
 });
 
-export { registerUser, login, logout, getUserData };
+const AddUserAvatar = asyncHandler(async (req, res) => {
+  const localFilePath = req.file?.path;
+
+  console.log(req.file);
+  if (!localFilePath) {
+    throw new ApiError(401, "File not get");
+  }
+  const uploadedImage = await uploadOnCloudinary(localFilePath);
+  console.log(uploadedImage);
+  if (!uploadedImage) {
+    throw new ApiError(500, "Cloudinary upload failed");
+  }
+
+  const user = await User.findById(req.user._id);
+
+  if (user.avatar?.public_id) {
+    await cloudinary.uploader.destroy(user.avatar.public_id);
+  }
+
+  user.avatar = {
+    public_id: uploadedImage.public_id,
+    url: uploadedImage.secure_url,
+  };
+
+  await user.save();
+
+  const createdUser = await User.findById(user._id).select(
+    "-password -refreshToken",
+  );
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, createdUser, "image updated successfully"));
+});
+
+export { registerUser, login, logout, getUserData, AddUserAvatar };

@@ -1,24 +1,49 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import { assets } from "../../assets/assets";
 import { NavLink } from "react-router-dom";
 import { ownerMenuLinks } from "../../assets/assets";
-function SideBarOwner() {
-  const [image, setImage] = useState("");
+import { AuthContext } from "../../context/AuthContext";
+import api from "../../api/axios";
+import { useState } from "react";
+import Loader from "../../components/Loader";
 
-  const handleImageUpload = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setImage(URL.createObjectURL(file));
+function SideBarOwner() {
+  const { user, setUser } = useContext(AuthContext);
+  const [uploading, setUploading] = useState(false);
+  const handleImageUpload = async (e) => {
+    setUploading(true);
+    const selectedFile = e.target.files[0];
+    if (!selectedFile) return;
+
+    const formData = new FormData();
+    formData.append("avatar", selectedFile);
+
+    try {
+      const response = await api.patch("/api/v1/user/AddUserAvatar", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      console.log(response);
+      if (response.data.success) {
+        setUser(response.data.data);
+        setUploading(false);
+      }
+    } catch (error) {
+      console.error("Avatar upload failed", error);
+    } finally {
+      setUploading(false);
     }
   };
 
   return (
     <>
+      {uploading && <Loader />}
       <div className="md:w-60 w-12 border-r border-gray-400/90 py-8 h-full ">
         <div className="flex flex-col gap-2 justify-center items-center ">
           <label htmlFor="image" className="cursor-pointer relative group">
             <img
-              src={image || assets.user_profile}
+              src={user.avatar.url}
               alt="user_profile"
               className="w-10 h-10 md:w-12 md:h-12 rounded-full object-cover"
             />
@@ -39,7 +64,10 @@ function SideBarOwner() {
             </div>
           </label>
 
-          <span className="md:text-[16px] text-sm">Kamal</span>
+          <span className="md:text-[16px] text-sm">
+            {String(user.username).charAt(0).toUpperCase()}
+            {user.username.slice(1)}
+          </span>
         </div>
         <div className="py-8 ">
           {ownerMenuLinks.map((item, index) => {

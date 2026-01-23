@@ -15,7 +15,14 @@ import {
   Route,
 } from "react-router-dom";
 import CarDetails from "./components/CarDetails";
+import Loader from "./components/Loader";
+import { useContext } from "react";
+import { AuthContext } from "./context/AuthContext";
 const App = () => {
+  const { loading } = useContext(AuthContext);
+  if (loading) {
+    return <Loader />;
+  }
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path="/" element={<Layout />}>

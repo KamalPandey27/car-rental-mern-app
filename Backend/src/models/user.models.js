@@ -18,9 +18,17 @@ const userSchema = new Schema(
       trim: true,
     },
     avatar: {
-      type: Object,
-      default: null,
+      public_id: {
+        type: String,
+        default: null,
+      },
+      url: {
+        type: String,
+        default:
+          "https://res.cloudinary.com/kamalpandey/image/upload/v1769159147/user_profile_mnvyed.png",
+      },
     },
+
     password: {
       type: String,
       required: [true, "Password is required"],
