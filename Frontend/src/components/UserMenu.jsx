@@ -12,7 +12,7 @@ function UserMenu({ showUserMenu, setshowUserMenu }) {
   const handleLogout = async () => {
     try {
       setLoggingOut(true);
-      await api.post(`/api/v1/user/logout`, {}, { withCredentials: true });
+      await api.post(`/api/v1/user/logout`);
       setUser(null);
       setshowUserMenu();
     } catch (error) {
@@ -45,7 +45,7 @@ function UserMenu({ showUserMenu, setshowUserMenu }) {
         />
 
         <img
-          onClick={() => setshowUserMenu(false)}
+          onClick={setshowUserMenu}
           src={assets.close_icon}
           alt="close_icon"
           className="absolute right-4 top-4 cursor-pointer w-4 h-4"

@@ -1,7 +1,7 @@
 import React from "react";
 import Layout from "./Layout";
 // Main route import
-import { Home, Cars, MyBookings, SignUp } from "./pages";
+import { Home, Cars, MyBookings } from "./pages";
 // Owner Dashboard route import
 import DashboardLayout from "./pages/owner/DashboardLayout";
 import OwnerDashboard from "./pages/owner/OwnerDashboard";

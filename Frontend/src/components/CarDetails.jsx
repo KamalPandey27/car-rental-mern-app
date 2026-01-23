@@ -13,6 +13,7 @@ function CarDetails() {
   const car = carData.find((item) => String(item._id) === id);
 
   const navigate = useNavigate();
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -44,8 +45,8 @@ function CarDetails() {
 
     setCarData((prev) =>
       prev.map((item) =>
-        item._id === car._id ? { ...item, isAvaliable: false } : item
-      )
+        item._id === car._id ? { ...item, isAvaliable: false } : item,
+      ),
     );
 
     navigate("/mybookings");

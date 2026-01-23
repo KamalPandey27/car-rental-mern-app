@@ -24,11 +24,12 @@ function SideBarOwner() {
           "Content-Type": "multipart/form-data",
         },
       });
-      console.log(response);
+
       if (response.data.success) {
         setUser(response.data.data);
         setUploading(false);
       }
+      
     } catch (error) {
       console.error("Avatar upload failed", error);
     } finally {

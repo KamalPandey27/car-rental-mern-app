@@ -136,11 +136,7 @@ function SignUp({ onClose }) {
               </button>
             )}
           </div>
-          {loginPage ? (
-            <div className="text-center text-red-600 mt-2">{userDetails}</div>
-          ) : (
-            <div className="text-center text-red-600 mt-2">{userDetails}</div>
-          )}
+          <div className="text-center text-red-600 mt-2">{userDetails}</div>
         </form>
       </div>
     </section>

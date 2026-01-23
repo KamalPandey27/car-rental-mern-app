@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useNavigate } from "react-router-dom";
 import { assets } from "../assets/assets";
 import { SignUp } from "../pages";
 import { AuthContext } from "../context/AuthContext";
@@ -10,6 +10,7 @@ function Navbar() {
   const menuRef = useRef(null);
   const [showSignUp, setShowSignUp] = useState(false);
   const [showUserMenu, setshowUserMenu] = useState(false);
+  const navigate = useNavigate();
   useEffect(() => {
     function handleClickOutside(event) {
       if (menuRef.current && !menuRef.current.contains(event.target)) {
@@ -26,6 +27,13 @@ function Navbar() {
     };
   }, [open]);
 
+  const handleDashboard = () => {
+    if (user) {
+      navigate("/owner");
+    } else {
+      alert("please login to access dashboard");
+    }
+  };
   return (
     <>
       <header className="flex items-center justify-between px-6 md:px-16 lg:px-24 xl:px-32 py-4 border-b border-borderColor fixed top-0 z-50 h-18.25 transition-all bg-light w-full">
@@ -78,21 +86,20 @@ function Navbar() {
               <img src={assets.search_icon} alt="search" />
             </li>
             <li>
-              <NavLink
-                to="/owner"
+              <button
+                onClick={handleDashboard}
                 className={({ isActive }) =>
                   isActive ? "text-black" : " text-gray-600"
                 }
               >
                 Dashboard
-              </NavLink>
+              </button>
             </li>
             <li>
               <UserMenu
                 showUserMenu={showUserMenu}
                 setshowUserMenu={() => setshowUserMenu(false)}
               />
-
               <div>
                 {user ? (
                   <button
@@ -152,7 +159,14 @@ function Navbar() {
               <img src={assets.search_icon} alt="search" />
             </li>
             <li>
-              <NavLink to="/owner">Dashboard</NavLink>
+              <button
+                onClick={handleDashboard}
+                className={({ isActive }) =>
+                  isActive ? "text-black" : " text-gray-600"
+                }
+              >
+                Dashboard
+              </button>
             </li>
             <li>
               <UserMenu
