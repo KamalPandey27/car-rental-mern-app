@@ -12,7 +12,7 @@ function DashboardLayout() {
           <aside className="h-screen">
             <SideBarOwner />
           </aside>
-          <main className="px-4 pt-10 md:px-10  min-w-0">
+          <main className="px-4 pt-10 md:px-10  min-w-0 border-l border-gray-400/90">
             <Outlet />
           </main>
         </div>

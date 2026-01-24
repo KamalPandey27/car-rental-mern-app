@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-
+import { assets } from "../assets/assets";
 import { AuthContext } from "../context/AuthContext";
 import Loader from "../components/Loader";
 import api from "../api/axios";
@@ -8,6 +8,7 @@ function SignUp({ onClose }) {
   const [loginPage, setLoginPage] = useState(false);
   const [userDetails, setUserDetails] = useState("");
   const [loginSignUploading, setloginSignUploading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -15,14 +16,12 @@ function SignUp({ onClose }) {
   });
 
   const handleSubmit = async (e) => {
+    ``;
     e.preventDefault();
     try {
       setloginSignUploading(true);
       const url = loginPage ? "/api/v1/user/login" : "/api/v1/user/signup";
-      const response = await api.post(`${url}`, formData, {
-        withCredentials: true,
-        // “Bhai cookies accept kar aur future requests mein bhejna”
-      });
+      const response = await api.post(`${url}`, formData);
       if (response.data.success === true) {
         setUser(response.data.data);
         setFormData({
@@ -93,19 +92,28 @@ function SignUp({ onClose }) {
               className="placeholder:text-gray-500/90 outline-none border border-gray-400/90 rounded p-2"
             />
           </div>
-          <div className="flex flex-col gap-1">
+          <div className="flex flex-col gap-1 ">
             <label htmlFor="password">Password</label>
-            <input
-              onChange={(e) =>
-                setFormData({ ...formData, password: e.target.value })
-              }
-              value={formData.password}
-              type="password"
-              name="password"
-              required
-              placeholder="type here"
-              className="placeholder:text-gray-500/90 outline-none border border-gray-400/90 rounded p-2"
-            />
+            <div className="border border-gray-400/90 flex justify-between  rounded">
+              {" "}
+              <input
+                onChange={(e) =>
+                  setFormData({ ...formData, password: e.target.value })
+                }
+                value={formData.password}
+                type={showPassword ? "text" : "password"}
+                name="password"
+                required
+                placeholder="type here"
+                className="placeholder:text-gray-500/90 outline-none p-2  "
+              />
+              <img
+                src={showPassword ? assets.eye_close_icon : assets.eye_icon}
+                alt="eye_icon"
+                className="w-10 cursor-pointer"
+                onClick={() => setShowPassword((prev) => !prev)}
+              />
+            </div>
           </div>
           <div>
             {loginPage ? "Create an account?" : "Already have account?"}

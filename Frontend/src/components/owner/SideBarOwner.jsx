@@ -19,17 +19,12 @@ function SideBarOwner() {
     formData.append("avatar", selectedFile);
 
     try {
-      const response = await api.patch("/api/v1/user/AddUserAvatar", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await api.patch("/api/v1/user/AddUserAvatar", formData);
 
       if (response.data.success) {
         setUser(response.data.data);
         setUploading(false);
       }
-      
     } catch (error) {
       console.error("Avatar upload failed", error);
     } finally {
@@ -40,7 +35,7 @@ function SideBarOwner() {
   return (
     <>
       {uploading && <Loader />}
-      <div className="md:w-60 w-12 border-r border-gray-400/90 py-8 h-full ">
+      <div className="md:w-60 w-12  py-8 h-full ">
         <div className="flex flex-col gap-2 justify-center items-center ">
           <label htmlFor="image" className="cursor-pointer relative group">
             <img

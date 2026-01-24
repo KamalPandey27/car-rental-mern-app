@@ -46,7 +46,7 @@ const carSchema = new Schema(
       required: true,
       trim: true,
       lowercase: true,
-      enum: ["van", "semautomatic", "automatic"],
+      enum: ["manual", "semautomatic", "automatic"],
     },
     fuelType: {
       type: String,

@@ -5,6 +5,7 @@ import { ApiResponse } from "../utils/apiResponse.js";
 import { User } from "../models/user.models.js";
 import jwt from "jsonwebtoken";
 import { v2 as cloudinary } from "cloudinary";
+import { Car } from "../models/car.models.js";
 
 const option = {
   httpOnly: true,
@@ -163,12 +164,11 @@ const getUserData = asyncHandler(async (req, res) => {
 const AddUserAvatar = asyncHandler(async (req, res) => {
   const localFilePath = req.file?.path;
 
-  console.log(req.file);
   if (!localFilePath) {
     throw new ApiError(401, "File not get");
   }
   const uploadedImage = await uploadOnCloudinary(localFilePath);
-  console.log(uploadedImage);
+
   if (!uploadedImage) {
     throw new ApiError(500, "Cloudinary upload failed");
   }
@@ -184,7 +184,7 @@ const AddUserAvatar = asyncHandler(async (req, res) => {
     url: uploadedImage.secure_url,
   };
 
-  await user.save();
+  await user.save({ validateBeforeSave: false });
 
   const createdUser = await User.findById(user._id).select(
     "-password -refreshToken",
@@ -195,4 +195,72 @@ const AddUserAvatar = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, createdUser, "image updated successfully"));
 });
 
-export { registerUser, login, logout, getUserData, AddUserAvatar };
+const carListing = asyncHandler(async (req, res) => {
+  const {
+    brand,
+    model,
+    year,
+    perDayPrice,
+    category,
+    transmission,
+    fuelType,
+    seatingCapacity,
+    location,
+    description,
+  } = req.body;
+
+  const image = req.file?.path;
+
+  if (
+    [
+      brand,
+      model,
+      year,
+      perDayPrice,
+      category,
+      transmission,
+      fuelType,
+      seatingCapacity,
+      location,
+      description,
+    ].some((item) => item == "") ||
+    !image
+  ) {
+    throw new ApiError(400, "Fill all details");
+  }
+
+  const uploadedImage = await uploadOnCloudinary(image);
+
+  if (!uploadedImage) {
+    throw new ApiError(500, "Cloudinary uploading error");
+  }
+
+  const car = await Car.create({
+    brand,
+    model,
+    year,
+    perDayPrice,
+    category,
+    transmission,
+    fuelType,
+    seatingCapacity,
+    location,
+    description,
+    image: {
+      url: uploadedImage.secure_url,
+      public_id: uploadedImage.public_id,
+    },
+    owner: req.user._id,
+  });
+
+  if (!car) {
+    throw new ApiError(500, "something went wrong while saving car data in DB");
+  }
+
+  const createdCar = await Car.findById(car._id);
+  return res
+    .status(201)
+    .json(new ApiResponse(201, createdCar, "you car is listed successfully"));
+});
+
+export { registerUser, login, logout, getUserData, AddUserAvatar, carListing };
