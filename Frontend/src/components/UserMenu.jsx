@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { assets } from "../assets/assets";
 
-import { AuthContext } from "../context/authContext";
+import { AuthContext } from "../context/AuthContext";
 import { useContext } from "react";
 import Loader from "../components/Loader";
 import api from "../api/axios";
@@ -15,6 +15,7 @@ function UserMenu({ showUserMenu, setshowUserMenu }) {
       await api.post(`/api/v1/user/logout`);
       setUser(null);
       setshowUserMenu();
+      localStorage.removeItem("isAuth");
     } catch (error) {
       console.log("logout failed", error);
     } finally {

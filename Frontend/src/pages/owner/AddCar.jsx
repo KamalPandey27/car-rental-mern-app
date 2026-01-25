@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import { assets } from "../../assets/assets";
 import api from "../../api/axios";
 import Loader from "../../components/Loader";
+
+import Location from "../../components/Location";
 function AddCar() {
   const [loading, setLoading] = useState(false);
+  const [location, setLocation] = useState("");
   const [carData, setCarData] = useState({
     brand: "",
     model: "",
@@ -17,9 +20,17 @@ function AddCar() {
     description: "",
     image: null,
   });
+
   const uploadCarData = async (e) => {
-    setLoading(true);
     e.preventDefault();
+
+    if (!location) {
+      alert("Please select location");
+      setLoading(false);
+      return;
+    }
+
+    setLoading(true);
 
     const formData = new FormData();
 
@@ -31,12 +42,12 @@ function AddCar() {
     formData.append("transmission", carData.transmission);
     formData.append("fuelType", carData.fuelType);
     formData.append("seatingCapacity", carData.seatingCapacity);
-    formData.append("location", carData.location);
+    formData.append("location", location);
     formData.append("description", carData.description);
     formData.append("image", carData.image);
     try {
       const response = await api.post("/api/v1/car/carListing", formData);
-      console.log(response);
+
       if (response.data.success) {
         setLoading(false);
         setCarData({
@@ -48,10 +59,11 @@ function AddCar() {
           transmission: "",
           fuelType: "",
           seatingCapacity: "",
-          location: "",
           description: "",
           image: null,
         });
+        setLocation("");
+        alert("Car Listed Successfully");
       }
     } catch (error) {
       console.log(error);
@@ -232,25 +244,7 @@ function AddCar() {
           </div>
         </div>
         <div>
-          <div className="flex flex-col gap-2 ">
-            <label htmlFor="Location">Location</label>
-            <select
-              required
-              id="Location"
-              value={carData.location}
-              onChange={(e) =>
-                setCarData({ ...carData, location: e.target.value })
-              }
-              className="p-1.5 outline-none border border-gray-500/90 rounded text-sm "
-            >
-              <option value="">Select a Location</option>
-              <option value="Delhi">Delhi</option>
-              <option value="Gurgaon">Gurgaon</option>
-              <option value="Panipat">Panipat</option>
-              <option value="Smalkha">Smalkha</option>
-              <option value="Karnal">Karnal</option>
-            </select>
-          </div>
+          <Location setLocation={setLocation} />
         </div>
         <div className="flex flex-col gap-2">
           <label htmlFor="Description">Description</label>

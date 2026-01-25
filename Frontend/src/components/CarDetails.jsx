@@ -2,56 +2,78 @@ import React, { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { assets } from "../assets/assets";
 import { useContext } from "react";
-import { BookContext } from "../context/BookContext";
-import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
+import api from "../api/axios";
+import Location from "../components/Location";
+import Loader from "./Loader";
 function CarDetails() {
   const { id } = useParams();
-  const { setBookingCar, carData, setCarData } = useContext(BookContext);
+  const { cars } = useContext(AuthContext);
   const [pickupDate, setPickupDate] = useState("");
   const [returnDate, setReturnDate] = useState("");
+  const [location, setLocation] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const car = carData.find((item) => String(item._id) === id);
+  const car = cars.find((item) => String(item._id) === id);
 
-  const navigate = useNavigate();
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
-    if (!pickupDate || !returnDate) {
-      alert("Please select both dates");
+    if (!location) {
+      alert("Please select location");
+      setLoading(false);
       return;
     }
 
-    if (new Date(returnDate) < new Date(pickupDate)) {
-      alert("Please select correct return date");
-      return;
+    try {
+      if (!pickupDate || !returnDate) {
+        alert("Please select both dates");
+        return;
+      }
+
+      if (new Date(returnDate) < new Date(pickupDate)) {
+        alert("Please select correct return date");
+        return;
+      }
+
+      // JavaScript converts the string into a Date object:
+      // JavaScript internally compares timestamps (milliseconds since Jan 1, 1970)
+
+      if (!car.isAvailable) {
+        alert("Car is already booked");
+        return;
+      }
+
+      const days = Math.ceil(
+        (new Date(returnDate) - new Date(pickupDate)) / 86400000,
+      );
+      const TotalDays = Math.max(1, days);
+
+      const formData = new FormData();
+      formData.append("pickupDate", pickupDate);
+      formData.append("returnDate", returnDate);
+      formData.append("location", location);
+      formData.append("totalDays", TotalDays);
+      formData.append("totalAmount", car.perDayPrice * TotalDays);
+      formData.append("owner", car.owner);
+      formData.append("car", car._id);
+      console.log(location);
+      const response = await api.post("/api/v1/carbooking/bookCar", formData);
+      console.log(response);
+      if (response.data.success) {
+        alert("Car booked successfully");
+        window.location.reload();
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
     }
-
-    // JavaScript converts the string into a Date object:
-    // JavaScript internally compares timestamps (milliseconds since Jan 1, 1970)
-
-    if (!car.isAvaliable) {
-      alert("Car is already booked");
-      return;
-    }
-
-    const days = (new Date(returnDate) - new Date(pickupDate)) / 86400000;
-    const TotalDays = Math.max(1, days);
-
-    setBookingCar((prev) => [
-      ...prev,
-      { ...car, pickupDate, returnDate, daysBooked: TotalDays },
-    ]);
-
-    setCarData((prev) =>
-      prev.map((item) =>
-        item._id === car._id ? { ...item, isAvaliable: false } : item,
-      ),
-    );
-
-    navigate("/mybookings");
   };
-
+  if (loading) {
+    <Loader />;
+  }
   return (
     <>
       <div className="mt-35 w-[80%] m-auto flex justify-between gap-5 lg:flex-row flex-col relative">
@@ -70,31 +92,40 @@ function CarDetails() {
           {" "}
           <div className="border-b border-gray-400/90 flex flex-col gap-5 ">
             <img
-              src={car.image}
+              src={car.image.url}
               alt="carImage"
               className="rounded-2xl md:max-h-100 h-auto w-full object-cover"
             />
             <div className="flex flex-col gap-1">
               <span className="lg:text-4xl md:text-3xl sm:text-2xl text-xl font-semibold">
-                {car.brand}
+                {String(car.brand).toUpperCase()}
               </span>
               <span className="text-gray-500/90 mb-5 sm:text-[16px] text-[14px]">
-                {car.category} . {car.year}
+                {String(car.category).charAt(0).toUpperCase()}
+                {String(car.category).slice(1)} - {car.year}
               </span>
             </div>
           </div>
           <div className="grid sm:grid-cols-4 grid-cols-2 gap-5">
             <div className="bg-light flex justify-center items-center flex-col gap-2 py-5 rounded">
               <img src={assets.users_icon} alt="users_icon" className="w-5" />
-              <span>{car.seating_capacity} Seats</span>
+              <span>{car.seatingCapacity} Seats</span>
             </div>
             <div className="bg-light flex justify-center items-center flex-col gap-2 py-5 rounded">
               <img src={assets.fuel_icon} alt="fuel_icon" className="w-5" />
-              <span>{car.fuel_type}</span>
+              <span>
+                {" "}
+                {String(car.fuelType).charAt(0).toUpperCase()}
+                {String(car.fuelType).slice(1)}
+              </span>
             </div>
             <div className="bg-light flex justify-center items-center flex-col gap-2 py-5 rounded">
               <img src={assets.carIcon} alt="carIcon" className="w-5" />
-              <span className="text-center">{car.transmission}</span>
+              <span className="text-center">
+                {" "}
+                {String(car.transmission).charAt(0).toUpperCase()}
+                {String(car.transmission).slice(1)}
+              </span>
             </div>
             <div className="bg-light flex justify-center items-center flex-col gap-2 py-5 rounded">
               <img
@@ -142,7 +173,7 @@ function CarDetails() {
         <div className="shadow-lg h-max  rounded-xl p-6 space-y-6 text-gray-500 lg:w-[35%] w-full">
           <div className=" border-b border-gray-400/90 flex justify-between pb-5 ">
             <span className=" text-black text-2xl  font-semibold">
-              ${car.pricePerDay}
+              ${car.perDayPrice}
             </span>
             <span className="">per day</span>
           </div>
@@ -175,11 +206,15 @@ function CarDetails() {
                 onChange={(e) => setReturnDate(e.target.value)}
               />
             </div>
+            <div>
+              <Location setLocation={setLocation} />
+            </div>
             <button
               className="w-full bg-primary hover:bg-primary-dull transition-all py-3 font-medium text-white rounded-xl cursor-pointer"
               type="submit"
+              disabled={!car.isAvailable}
             >
-              Book Now
+              {car.isAvailable ? "Book Now" : "Car Not Available"}
             </button>
           </form>
           <div className="text-center">No credit card required to reserve</div>

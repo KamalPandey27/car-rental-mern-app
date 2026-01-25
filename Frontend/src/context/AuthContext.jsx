@@ -5,24 +5,46 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [cars, setCars] = useState([]);
+  const [bookingCar, setBookingCar] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    api
-      .get("/api/v1/user/getUserData")
-      .then((response) => {
-        setUser(response.data.data);
-      })
-      .catch(() => {
+    const initAuth = async () => {
+      try {
+        const [userRes, carsRes, bookingCarRes] = await Promise.all([
+          api.get("/api/v1/user/getUserData"),
+          api.get("/api/v1/car/getAllCars"),
+          api.get("/api/v1/carbooking/getAllBookings"),
+        ]);
+
+        setUser(userRes.data.data);
+        setCars(carsRes.data.data);
+        setBookingCar(bookingCarRes.data.data);
+        console.log(carsRes, bookingCarRes);
+      } catch (err) {
         setUser(null);
-      })
-      .finally(() => {
+        console.log("Auth init error:", err);
+      } finally {
         setLoading(false);
-      });
+      }
+    };
+
+    initAuth();
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, setUser, loading }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        setUser,
+        cars,
+        setCars,
+        loading,
+        bookingCar,
+        setBookingCar,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

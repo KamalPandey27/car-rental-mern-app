@@ -4,9 +4,9 @@ import { Link } from "react-router-dom";
 import CarCard from "../components/CarCard";
 import Hero from "../components/Hero";
 import { useContext } from "react";
-import { BookContext } from "../context/BookContext";
+import { AuthContext } from "../context/AuthContext";
 function Home() {
-  const { carData } = useContext(BookContext);
+  const { cars } = useContext(AuthContext);
   return (
     <>
       <main className="overflow-x-hidden pt-18.25">
@@ -24,7 +24,7 @@ function Home() {
             </span>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-18">
-            {carData.slice(0, 6)?.map((item, index) => (
+            {cars.slice(0, 6)?.map((item, index) => (
               <CarCard key={index} item={item} />
             ))}
           </div>

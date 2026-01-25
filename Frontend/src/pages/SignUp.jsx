@@ -16,15 +16,16 @@ function SignUp({ onClose }) {
   });
 
   const handleSubmit = async (e) => {
-    ``;
     e.preventDefault();
     try {
       setloginSignUploading(true);
+
       const url = loginPage ? "/api/v1/user/login" : "/api/v1/user/signup";
       const response = await api.post(`${url}`, formData);
-      console.log(response);
+
       if (response.data.success === true) {
         setUser(response.data.data);
+        localStorage.setItem("isAuth", true);
         setFormData({
           username: "",
           email: "",
@@ -34,7 +35,6 @@ function SignUp({ onClose }) {
       }
     } catch (error) {
       console.log(error.response);
-      console.error(error.response?.data?.message || "Something went wrong");
       setUserDetails(error.response?.data?.message || "Something went wrong");
       setFormData({
         username: "",

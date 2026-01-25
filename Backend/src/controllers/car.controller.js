@@ -19,7 +19,7 @@ const carListing = asyncHandler(async (req, res) => {
   } = req.body;
 
   const image = req.file?.path;
-
+  console.log(req.body, req.file);
   if (
     [
       brand,
@@ -72,4 +72,11 @@ const carListing = asyncHandler(async (req, res) => {
     .json(new ApiResponse(201, createdCar, "you car is listed successfully"));
 });
 
-export { carListing };
+const getAllCars = asyncHandler(async (req, res) => {
+  const car = await Car.find();
+  return res
+    .status(200)
+    .json(new ApiResponse(200, car, "All cars fetched successfully"));
+});
+
+export { carListing, getAllCars };

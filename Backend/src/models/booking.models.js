@@ -34,13 +34,21 @@ const bookingCarSchema = new Schema(
     },
     status: {
       type: String,
-      required: true,
       enum: ["pending", "confirmed", "cancelled", "completed"],
       default: "pending",
     },
     car: {
       type: mongoose.Types.ObjectId,
       ref: "Car",
+      required: true,
+    },
+    totalDays: {
+      type: Number,
+      required: true,
+      min: 1,
+    },
+    location: {
+      type: String,
       required: true,
     },
   },

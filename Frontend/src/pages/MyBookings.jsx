@@ -1,9 +1,10 @@
 import React from "react";
 import { useContext } from "react";
-import { BookContext } from "../context/BookContext";
+
 import { assets } from "../assets/assets";
+import { AuthContext } from "../context/AuthContext";
 function MyBookings() {
-  const { bookingCar } = useContext(BookContext);
+  const { bookingCar } = useContext(AuthContext);
 
   return (
     <>
@@ -27,16 +28,17 @@ function MyBookings() {
                   <div className="flex sm:flex-row flex-col md:gap-7 sm:gap-4 gap-5">
                     <div className="flex flex-col gap-1">
                       <img
-                        src={cars.image}
+                        src={cars.car.image.url}
                         alt="carImage"
                         className="sm:w-50 rounded"
                       />
                       <div className="flex flex-col">
                         <span className="text-lg font-medium mt-2">
-                          {cars.brand} - {cars.model}
+                          {cars.car.brand} - {cars.car.model}
                         </span>
                         <span className="text-gray-500">
-                          {cars.year} - {cars.category} - {cars.location}
+                          {cars.car.year} - {cars.car.category} -{" "}
+                          {cars.location}
                         </span>
                       </div>
                     </div>
@@ -60,8 +62,8 @@ function MyBookings() {
                         <div className="flex flex-col">
                           <span className="text-gray-500">Rental Period</span>
                           <span className="flex lg:gap-2 lg:flex-row md:gap-1 md:flex-col sm:flex-row flex-col gap-2 ">
-                            <p> {cars.pickupDate}</p> To
-                            <p>{cars.returnDate}</p>
+                            <p> {String(cars.pickupDate).split("T")[0]}</p> To
+                            <p>{String(cars.returnDate).split("T")[0]}</p>
                           </span>
                         </div>
                       </div>
@@ -84,7 +86,7 @@ function MyBookings() {
                   <div className="flex flex-col gap-1 text-sm text-gray-500 text-right">
                     <span>Total Price</span>
                     <span className="text-2xl font-semibold text-primary">
-                      $-{cars.pricePerDay * cars.daysBooked}
+                      $-{cars.car.perDayPrice * cars.totalDays}
                     </span>
                     <span>
                       Booked on {new Date().toISOString().split("T")[0]}
