@@ -22,6 +22,7 @@ function SignUp({ onClose }) {
       setloginSignUploading(true);
       const url = loginPage ? "/api/v1/user/login" : "/api/v1/user/signup";
       const response = await api.post(`${url}`, formData);
+      console.log(response);
       if (response.data.success === true) {
         setUser(response.data.data);
         setFormData({
@@ -32,6 +33,7 @@ function SignUp({ onClose }) {
         onClose();
       }
     } catch (error) {
+      console.log(error.response);
       console.error(error.response?.data?.message || "Something went wrong");
       setUserDetails(error.response?.data?.message || "Something went wrong");
       setFormData({

@@ -5,30 +5,4 @@ const api = axios.create({
   withCredentials: true,
 });
 
-// 🔁 RESPONSE INTERCEPTOR
-api.interceptors.response.use(
-  (response) => response,
-
-  async (error) => {
-    const originalRequest = error.config;
-
-    if (error.response?.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true;
-
-      try {
-        // 🔄 Silent refresh call
-        await api.get("/api/v1/user/getUserData");
-
-        // 🔁 Retry original request
-        return api(originalRequest);
-      } catch (refreshError) {
-        // ❌ Refresh token bhi expire → logout flow
-        return Promise.reject(refreshError);
-      }
-    }
-
-    return Promise.reject(error);
-  },
-);
-
 export default api;

@@ -35,7 +35,7 @@ function AddCar() {
     formData.append("description", carData.description);
     formData.append("image", carData.image);
     try {
-      const response = await api.post("/api/v1/user/carListing", formData);
+      const response = await api.post("/api/v1/car/carListing", formData);
       console.log(response);
       if (response.data.success) {
         setLoading(false);
@@ -137,6 +137,7 @@ function AddCar() {
               type="number"
               name=""
               id="year"
+              min={2005}
               value={carData.year}
               onChange={(e) => setCarData({ ...carData, year: e.target.value })}
               placeholder="0"

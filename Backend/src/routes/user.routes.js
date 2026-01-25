@@ -9,7 +9,6 @@ import {
   logout,
   registerUser,
   AddUserAvatar,
-  carListing,
 } from "../controllers/user.controller.js";
 router.route("/signup").post(registerUser);
 router.route("/login").post(login);
@@ -18,6 +17,5 @@ router.route("/getUserData").get(getUserData);
 router
   .route("/AddUserAvatar")
   .patch(verifyJWT, upload.single("avatar"), AddUserAvatar);
-router.route("/carListing").post(verifyJWT, upload.single("image"), carListing);
 
 export default router;
