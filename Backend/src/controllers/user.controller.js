@@ -5,7 +5,8 @@ import { ApiResponse } from "../utils/apiResponse.js";
 import { User } from "../models/user.models.js";
 import jwt from "jsonwebtoken";
 import { v2 as cloudinary } from "cloudinary";
-
+import crypto from "crypto";
+import { sendEmail } from "../utils/sendMail.js";
 const option = {
   httpOnly: true,
   secure: process.env.NODE_ENV === "production",
@@ -194,4 +195,73 @@ const AddUserAvatar = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, createdUser, "image updated successfully"));
 });
 
-export { registerUser, login, logout, getUserData, AddUserAvatar };
+const forgetPassword = asyncHandler(async (req, res) => {
+  const { email } = req.body;
+
+  if (!email) {
+    throw new ApiError(400, "Please provide your email");
+  }
+  const user = await User.findOne({ email });
+
+  if (!user) {
+    throw new ApiError(404, "User not found with this email");
+  }
+
+  const otp = Math.floor(Math.random() * 900000).toString();
+  const hashedOTP = crypto.createHash("sha256").update(otp).digest("hex");
+  user.forgotPasswordOTP = hashedOTP;
+  user.forgotPasswordOTPExpiry = Date.now() + 15 * 60 * 1000;
+
+  await user.save();
+
+  await sendEmail({
+    to: user.email,
+    subject: "Password Reset OTP",
+    html: `<h2>Your OTP is ${otp}</h2><p>Valid for 10 minutes</p>`,
+  });
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, null, "OTP sent to your email"));
+});
+
+const resetPassword = asyncHandler(async (req, res) => {
+  const { email, otp, newPassword } = req.body;
+  if (!email || !otp || !newPassword) {
+    throw new ApiError(400, "Fill details");
+  }
+
+  const user = await User.findOne({ email });
+  if (!user) {
+    throw new ApiError("404", "User not found");
+  }
+
+  const hashedOTP = crypto.createHash("sha256").update(otp).digest("hex");
+
+  if (
+    user.forgotPasswordOTP !== hashedOTP ||
+    user.forgotPasswordOTPExpiry < Date.now()
+  ) {
+    throw new ApiError(400, "Invalid or expire otp");
+  }
+
+  user.password = newPassword;
+  user.forgotPasswordOTP = undefined;
+  user.forgotPasswordOTPExpiry = undefined;
+
+  await user.save();
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, null, "Password reset successfully"));
+});
+
+export {
+  registerUser,
+  login,
+  logout,
+  getUserData,
+  AddUserAvatar,
+  forgetPassword,
+  resetPassword,
+};

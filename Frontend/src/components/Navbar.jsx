@@ -135,20 +135,29 @@ function Navbar() {
 
           <ul
             ref={menuRef}
-            className={`bg-white md:hidden absolute top-0 right-0 h-screen w-[60vw] flex flex-col  xl:gap-7 md:gap-5 gap-3  text-[16px] p-5 transition-all duration-300 ease-in-out ${
+            className={`bg-white md:hidden absolute top-0 right-0 h-screen w-screen flex flex-col  xl:gap-7 md:gap-5 gap-3  text-[16px] p-5 transition-all duration-300 ease-in-out ${
               open
                 ? "translate-x-0 opacity-100 pointer-events-auto "
                 : "translate-x-full opacity-0 pointer-events-none"
             }`}
           >
             <li>
-              <NavLink to="/">Home</NavLink>
+              <NavLink to="/" onClick={() => setOpen((prev) => !prev)}>
+                Home
+              </NavLink>
             </li>
             <li>
-              <NavLink to="/cars">Cars</NavLink>
+              <NavLink to="/cars" onClick={() => setOpen((prev) => !prev)}>
+                Cars
+              </NavLink>
             </li>
             <li>
-              <NavLink to="/mybookings">My Bookings</NavLink>
+              <NavLink
+                to="/mybookings"
+                onClick={() => setOpen((prev) => !prev)}
+              >
+                My Bookings
+              </NavLink>
             </li>
             <li className="hidden lg:flex items-center text-sm gap-2 border border-borderColor px-3 rounded-full max-w-56">
               <input
@@ -160,7 +169,10 @@ function Navbar() {
             </li>
             <li>
               <button
-                onClick={handleDashboard}
+                onClick={() => {
+                  handleDashboard();
+                  setOpen((prev) => !prev);
+                }}
                 className={({ isActive }) =>
                   isActive ? "text-black" : " text-gray-600"
                 }
@@ -185,7 +197,9 @@ function Navbar() {
                   </button>
                 ) : (
                   <button
-                    onClick={() => setShowSignUp(true)}
+                    onClick={() => {
+                      setShowSignUp(true);
+                    }}
                     type="button"
                     className="cursor-pointer px-8 py-2 bg-primary hover:bg-primary-dull transition-all text-white rounded-lg"
                   >

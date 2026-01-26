@@ -5,7 +5,7 @@ function Hero() {
   const location = ["Panipat", "Samalkha", "Delhi"];
 
   const [selectLocation, setSelectLocation] = useState(
-    "Please select location"
+    "Please select location",
   );
   return (
     <>

@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext,  useEffect, useState } from "react";
 import api from "../api/axios";
 
 const AuthContext = createContext();
@@ -21,7 +21,7 @@ export const AuthProvider = ({ children }) => {
         setUser(userRes.data.data);
         setCars(carsRes.data.data);
         setBookingCar(bookingCarRes.data.data);
-        console.log(carsRes, bookingCarRes);
+        console.log(carsRes, bookingCarRes , userRes);
       } catch (err) {
         setUser(null);
         console.log("Auth init error:", err);
