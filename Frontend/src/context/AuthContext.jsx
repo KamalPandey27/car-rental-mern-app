@@ -1,4 +1,4 @@
-import { createContext,  useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import api from "../api/axios";
 
 const AuthContext = createContext();
@@ -12,19 +12,25 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const initAuth = async () => {
       try {
-        const [userRes, carsRes, bookingCarRes] = await Promise.all([
+        // PUBLIC — should always run
+        const carsRes = await api.get("/api/v1/car/getAllCars");
+        setCars(carsRes.data.data);
+      } catch (err) {
+        console.log("Cars fetch error:", err);
+      }
+
+      try {
+        // AUTH — may fail if not logged in
+        const [userRes, bookingCarRes] = await Promise.all([
           api.get("/api/v1/user/getUserData"),
-          api.get("/api/v1/car/getAllCars"),
           api.get("/api/v1/carbooking/getAllBookings"),
         ]);
 
         setUser(userRes.data.data);
-        setCars(carsRes.data.data);
         setBookingCar(bookingCarRes.data.data);
-        console.log(carsRes, bookingCarRes , userRes);
       } catch (err) {
+        console.log("User fetch error:", err);
         setUser(null);
-        console.log("Auth init error:", err);
       } finally {
         setLoading(false);
       }

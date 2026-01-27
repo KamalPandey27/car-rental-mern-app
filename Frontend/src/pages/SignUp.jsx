@@ -28,6 +28,7 @@ function SignUp({ onClose }) {
       if (response.data.success === true) {
         setUser(response.data.data);
         localStorage.setItem("isAuth", true);
+        window.location.reload();
         setFormData({
           username: "",
           email: "",

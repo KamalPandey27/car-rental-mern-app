@@ -5,9 +5,15 @@ import { upload } from "../middleware/multer.middleware.js";
 const router = Router();
 
 import { carListing } from "../controllers/car.controller.js";
-import { getAllCars } from "../controllers/car.controller.js";
+import {
+  getAllCars,
+  search,
+  searchCar,
+} from "../controllers/car.controller.js";
 
 router.route("/getAllCars").get(getAllCars);
+router.route("/search").post(search);
+router.route("/searchCar").post(searchCar);
 router.route("/carListing").post(verifyJWT, upload.single("image"), carListing);
 
 export default router;

@@ -79,4 +79,42 @@ const getAllCars = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, car, "All cars fetched successfully"));
 });
 
-export { carListing, getAllCars };
+const search = asyncHandler(async (req, res) => {
+  const { selectLocation } = req.body;
+  console.log(selectLocation);
+  if (!selectLocation) {
+    throw new ApiError(400, "Give location");
+  }
+
+  const car = await Car.find({ location: selectLocation });
+  if (!car) {
+    throw new ApiError(404, "Now in this location not present any vehichle");
+  }
+  res
+    .status(200)
+    .json(new ApiResponse(200, car, "successfully find some vehichle"));
+});
+
+const searchCar = asyncHandler(async (req, res) => {
+  const { search } = req.body;
+
+  let cars;
+
+  if (!search || search.trim() === "") {
+    cars = await Car.find({});
+  } else {
+    cars = await Car.find({
+      $text: { $search: search },
+    });
+  }
+
+  if (cars.length === 0) {
+    throw new ApiError(404, "No vehicles found matching the search criteria");
+  }
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, cars, "Vehicles fetched successfully"));
+});
+
+export { carListing, getAllCars, search, searchCar };

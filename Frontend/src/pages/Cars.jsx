@@ -1,10 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import { assets } from "../assets/assets";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import CarCard from "../components/CarCard";
+import { useEffect } from "react";
+import api from "../api/axios";
 function Cars() {
   const { cars } = useContext(AuthContext);
+  const [filteredCars, setFilteredCars] = useState([]);
+  const [search, setSearch] = useState("");
+  useEffect(() => {
+    const fetchSearch = async () => {
+      try {
+        const response = await api.post("/api/v1/car/searchCar", { search });
+        if (response.data.success) {
+          setFilteredCars(response.data.data);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    if (search.trim() === "") {
+      setFilteredCars(cars); // reset to all cars
+    } else {
+      fetchSearch();
+    }
+  }, [search, cars]);
+
   return (
     <>
       <section className="flex flex-col  w-full pt-18.25">
@@ -22,6 +44,10 @@ function Cars() {
               type="text"
               name=""
               id=""
+              value={search}
+              onChange={(e) => {
+                setSearch(e.target.value);
+              }}
               placeholder="Search by name , model , features"
               className="outline-none w-full sm:text-sm text-[12px]"
             />
@@ -32,7 +58,7 @@ function Cars() {
           Showing {cars.length} Cars
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-10 px-6 md:px-16 lg:px-24 xl:px-32">
-          {cars?.map((item) => (
+          {filteredCars?.map((item) => (
             <CarCard item={item} />
           ))}
         </div>

@@ -83,4 +83,14 @@ const carSchema = new Schema(
   { timestamps: true },
 );
 
+carSchema.index({
+  brand: "text",
+  model: "text",
+  category: "text",
+  transmission: "text",
+  fuelType: "text",
+  description: "text",
+  location: "text",
+});
+
 export const Car = model("Car", carSchema);
