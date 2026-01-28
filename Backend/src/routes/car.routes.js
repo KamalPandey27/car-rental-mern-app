@@ -4,8 +4,8 @@ import { upload } from "../middleware/multer.middleware.js";
 
 const router = Router();
 
-import { carListing } from "../controllers/car.controller.js";
 import {
+  carListing,
   getAllCars,
   search,
   searchCar,

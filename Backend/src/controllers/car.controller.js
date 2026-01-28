@@ -81,13 +81,13 @@ const getAllCars = asyncHandler(async (req, res) => {
 
 const search = asyncHandler(async (req, res) => {
   const { selectLocation } = req.body;
-  console.log(selectLocation);
+
   if (!selectLocation) {
     throw new ApiError(400, "Give location");
   }
 
   const car = await Car.find({ location: selectLocation });
-  if (!car) {
+  if (car.length == 0) {
     throw new ApiError(404, "Now in this location not present any vehichle");
   }
   res

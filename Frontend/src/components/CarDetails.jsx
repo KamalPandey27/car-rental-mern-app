@@ -19,7 +19,7 @@ function CarDetails() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-
+    console.log("click ");
     if (!location) {
       alert("Please select location");
       setLoading(false);
@@ -58,7 +58,7 @@ function CarDetails() {
       formData.append("totalAmount", car.perDayPrice * TotalDays);
       formData.append("owner", car.owner);
       formData.append("car", car._id);
-      console.log(location);
+
       const response = await api.post("/api/v1/carbooking/bookCar", formData);
       console.log(response);
       if (response.data.success) {

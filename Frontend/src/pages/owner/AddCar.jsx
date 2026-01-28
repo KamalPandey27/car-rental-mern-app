@@ -24,6 +24,10 @@ function AddCar() {
   const uploadCarData = async (e) => {
     e.preventDefault();
 
+    if (carData.image === null) {
+      alert("please upload car image");
+    }
+
     if (!location) {
       alert("Please select location");
       setLoading(false);

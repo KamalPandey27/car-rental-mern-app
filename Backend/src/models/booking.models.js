@@ -15,7 +15,6 @@ const bookingCarSchema = new Schema(
     pickupDate: {
       type: Date,
       required: true,
-      min: new Date().toISOString(),
     },
     returnDate: {
       type: Date,

@@ -8,6 +8,7 @@ import api from "../api/axios";
 function Cars() {
   const { cars } = useContext(AuthContext);
   const [filteredCars, setFilteredCars] = useState([]);
+
   const [search, setSearch] = useState("");
   useEffect(() => {
     const fetchSearch = async () => {
@@ -57,6 +58,7 @@ function Cars() {
         <div className="text-gray-500/90 mt-10 ml-35">
           Showing {cars.length} Cars
         </div>
+
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-10 px-6 md:px-16 lg:px-24 xl:px-32">
           {filteredCars?.map((item) => (
             <CarCard item={item} />

@@ -15,6 +15,7 @@ function Hero() {
   const [selectLocation, setSelectLocation] = useState(
     "Please select location",
   );
+  const [searchError, setSearchError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
@@ -49,11 +50,13 @@ function Hero() {
     try {
       const response = await api.post("/api/v1/car/search", { selectLocation });
       setCars(response.data.data);
+      console.log(response);
       if (response.data.success) {
         navigate("/cars");
       }
     } catch (error) {
-      console.log(error);
+      console.log(error.response);
+      setSearchError(error.response.data.message);
     } finally {
       setLoading(false);
     }
@@ -66,6 +69,7 @@ function Hero() {
         <div className="text-4xl md:text-5xl font-semibold text-center my-5">
           Luxury cars on Rent
         </div>
+        <div className="text-center text-red-600">{searchError}</div>
         <form
           action=""
           onSubmit={handleSubmit}
@@ -77,6 +81,7 @@ function Hero() {
                 className="w-48"
                 name=""
                 id=""
+                required
                 value={selectedState}
                 onChange={(e) => setSelectedState(e.target.value)}
               >
@@ -92,6 +97,7 @@ function Hero() {
               <select
                 name=""
                 id=""
+                required
                 value={selectLocation}
                 onChange={(e) => setSelectLocation(e.target.value)}
               >

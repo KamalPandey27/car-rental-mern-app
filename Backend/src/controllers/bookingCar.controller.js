@@ -52,7 +52,7 @@ const bookCar = asyncHandler(async (req, res) => {
     .json(new ApiResponse(201, bookingCar, "Car booked successfully"));
 });
 
-const getAllBookings = asyncHandler(async (req, res) => {
+const getCoustomerBookings = asyncHandler(async (req, res) => {
   const bookings = await BookingCar.find({
     customer: req.user._id,
   })
@@ -66,4 +66,27 @@ const getAllBookings = asyncHandler(async (req, res) => {
     .status(200)
     .json(new ApiResponse(200, bookings, "Bookings fetched successfully"));
 });
-export { bookCar, getAllBookings };
+
+const ownerBookingCar = asyncHandler(async (req, res) => {
+  const user = req.user._id;
+
+  if (!user) {
+    throw new ApiError(401, "Unauthorized");
+  }
+
+  const ListedCars = await BookingCar.find({ owner: user })
+    .populate("car")
+    .populate({
+      path: "customer",
+      select: "-password -refreshtoken",
+    });
+  if (!ListedCars) {
+    throw new ApiError(404, "car not found");
+  }
+  return res
+    .status(200)
+    .json(new ApiResponse(200, ListedCars, "Car find successfully"));
+});
+
+const CarStatus = asyncHandler(async (req, res) => {});
+export { bookCar, getCoustomerBookings, ownerBookingCar, CarStatus };

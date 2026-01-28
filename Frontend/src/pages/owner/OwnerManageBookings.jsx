@@ -1,6 +1,21 @@
-import React from "react";
-
+import React, { useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
+import api from "../../api/axios";
 function OwnerManageBookings() {
+  const { ownerBookingCar } = useContext(AuthContext);
+
+  console.log(ownerBookingCar);
+  const HandleStatusCar = async (carId, status) => {
+    try {
+      const response = await api.post("/api/v1/carbooking/CarStatus", {
+        carId,
+        status,
+      });
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <>
       <section>
@@ -20,7 +35,51 @@ function OwnerManageBookings() {
                 <th className="p-3 font-medium">Actions</th>
               </tr>
             </thead>
-            <tbody></tbody>
+            <tbody className="">
+              {ownerBookingCar.map((car) => {
+                return (
+                  <tr className="border-t border-borderColor" id={car._id}>
+                    <td>
+                      <div className=" flex gap-2 items-center p-3">
+                        <img
+                          src={car.car.image.url}
+                          alt=""
+                          className="w-16 h-10 rounded object-cover"
+                        />
+                        <div className="flex  flex-col gap-1">
+                          <div className="font-medium">
+                            {" "}
+                            {car.car.brand.toString().toUpperCase()}
+                          </div>
+                          <div className=" text-gray-500">{car.car.year}</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="p-3">
+                      <div>{car.returnDate.split("T")[0].toString()}</div>
+                      <div>{car.pickupDate.split("T")[0].toString()}</div>
+                    </td>
+                    <td className="p-3">${car.price}</td>
+                    <td className="p-3">Cash</td>
+                    <td>
+                      <select
+                        name=""
+                        id=""
+                        value={ownerBookingCar.status}
+                        onChange={(e) =>
+                          HandleStatusCar(ownerBookingCar._id, e.target.value)
+                        }
+                      >
+                        <option value="pending">Pending</option>
+                        <option value="confirmed">Confirmed</option>
+                        <option value="cancelled">Cancelled</option>
+                        <option value="completed">Completed</option>
+                      </select>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
           </table>
         </div>
       </section>

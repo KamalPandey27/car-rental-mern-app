@@ -62,10 +62,16 @@ function SignUp({ onClose }) {
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className="bg-white  flex items-center justify-center flex-col rounded-lg px-8 py-12 gap-5 w-90"
+            className="bg-white relative  flex items-center justify-center flex-col rounded-lg px-8 py-12 gap-5 w-90"
           >
+            <img
+              src={assets.close_icon}
+              alt="close_icon"
+              className="absolute top-5 right-5  cursor-pointer md:hidden"
+              onClick={onClose}
+            />
             <div className="md:text-xl text-lg font-semibold flex justify-center gap-1 text-gray-700  w-full">
-              <p className="text-primary">User</p>{" "}
+              <p className="text-primary">User</p>
               {loginPage ? "Login" : "Sign Up"}
             </div>
             <form
