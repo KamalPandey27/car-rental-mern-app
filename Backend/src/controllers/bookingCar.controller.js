@@ -88,5 +88,30 @@ const ownerBookingCar = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, ListedCars, "Car find successfully"));
 });
 
-const CarStatus = asyncHandler(async (req, res) => {});
+const CarStatus = asyncHandler(async (req, res) => {
+  const { carId, status } = req.body;
+
+  if (!carId || !status) {
+    throw new ApiError(400, "Give details");
+  }
+  const car = await BookingCar.findByIdAndUpdate(
+    carId,
+    {
+      status,
+    },
+    {
+      new: true,
+      runValidators: true,
+    },
+  );
+  if (!car) {
+    throw new ApiError(
+      500,
+      "Some thing wrong while updating status of booking",
+    );
+  }
+  return res
+    .status(200)
+    .json(new ApiResponse(200, car, "Car status updated successfully"));
+});
 export { bookCar, getCoustomerBookings, ownerBookingCar, CarStatus };

@@ -79,6 +79,10 @@ const carSchema = new Schema(
       type: mongoose.Types.ObjectId,
       ref: "User",
     },
+    isListed: {
+      type: Boolean,
+      default: true,
+    },
   },
   { timestamps: true },
 );

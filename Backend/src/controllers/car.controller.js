@@ -86,35 +86,94 @@ const search = asyncHandler(async (req, res) => {
     throw new ApiError(400, "Give location");
   }
 
-  const car = await Car.find({ location: selectLocation });
-  if (car.length == 0) {
-    throw new ApiError(404, "Now in this location not present any vehichle");
-  }
-  res
-    .status(200)
-    .json(new ApiResponse(200, car, "successfully find some vehichle"));
+  const cars = await Car.find({ isListed: true, location: selectLocation });
+
+  return res.status(200).json(
+    new ApiResponse(
+      200,
+      cars, // can be empty array []
+      cars.length ? "Vehicles found" : "No vehicles found in this location",
+    ),
+  );
 });
 
 const searchCar = asyncHandler(async (req, res) => {
   const { search } = req.body;
 
+  const query = search?.trim();
+
   let cars;
 
-  if (!search || search.trim() === "") {
-    cars = await Car.find({});
+  if (!query) {
+    cars = await Car.find({ isListed: true });
   } else {
     cars = await Car.find({
-      $text: { $search: search },
+      isListed: true,
+      $or: [
+        { brand: { $regex: query, $options: "i" } },
+        { model: { $regex: query, $options: "i" } },
+        { category: { $regex: query, $options: "i" } },
+        { transmission: { $regex: query, $options: "i" } },
+        { fuelType: { $regex: query, $options: "i" } },
+        { description: { $regex: query, $options: "i" } },
+        { location: { $regex: query, $options: "i" } },
+      ],
     });
-  }
-
-  if (cars.length === 0) {
-    throw new ApiError(404, "No vehicles found matching the search criteria");
   }
 
   return res
     .status(200)
-    .json(new ApiResponse(200, cars, "Vehicles fetched successfully"));
+    .json(
+      new ApiResponse(
+        200,
+        cars,
+        cars.length ? "Vehicles found" : "No vehicles found",
+      ),
+    );
 });
 
-export { carListing, getAllCars, search, searchCar };
+const updateCarDetails = asyncHandler(async (req, res) => {
+  const { perDayPrice, status, carId } = req.body;
+  if (!perDayPrice || !carId) {
+    throw new ApiError(400, "Give details to update");
+  }
+
+  const car = await Car.findByIdAndUpdate(
+    carId,
+    { isAvailable: status, perDayPrice },
+    { new: true, runValidators: true },
+  );
+
+  if (!car) {
+    throw new ApiError(
+      500,
+      "something went wrong while updated the car details",
+    );
+  }
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, car, "Car details updated successfully"));
+});
+
+const unlist = asyncHandler(async (req, res) => {
+  const { carId, isListed } = req.body;
+
+  if (!carId) {
+    throw new ApiError(400, "Car id not send");
+  }
+
+  const car = await Car.findByIdAndUpdate(
+    carId,
+    { isListed: isListed },
+    { new: true, runValidators: true },
+  );
+  if (!car) {
+    throw new ApiError(500, "Something went wrong while deleting car");
+  }
+  return res
+    .status(200)
+    .json(new ApiResponse(200, car, "Car deleted successfully"));
+});
+
+export { carListing, getAllCars, search, searchCar, updateCarDetails, unlist };

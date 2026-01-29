@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { assets } from "../../assets/assets";
 import api from "../../api/axios";
 import Loader from "../../components/Loader";
 
 import Location from "../../components/Location";
+import { AuthContext } from "../../context/AuthContext";
 function AddCar() {
+  const { fetchCars, fetchOwnerBookings } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   const [location, setLocation] = useState("");
   const [carData, setCarData] = useState({
@@ -54,6 +56,8 @@ function AddCar() {
 
       if (response.data.success) {
         setLoading(false);
+        await fetchCars();
+        await fetchOwnerBookings();
         setCarData({
           brand: "",
           model: "",

@@ -22,7 +22,7 @@ function OwnerDashboard() {
   const earningBookings = ownerBookingCar.filter((car) => {
     const returnDate = new Date(car.returnDate);
     return (
-      car.status?.toString() === "pending" &&
+      car.status?.toString() === "completed" &&
       currentDate.getMonth().toString() === returnDate.getMonth().toString() &&
       currentDate.getFullYear().toString() ===
         returnDate.getFullYear().toString()

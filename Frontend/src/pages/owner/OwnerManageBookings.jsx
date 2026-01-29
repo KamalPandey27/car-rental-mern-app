@@ -2,9 +2,9 @@ import React, { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import api from "../../api/axios";
 function OwnerManageBookings() {
-  const { ownerBookingCar } = useContext(AuthContext);
+  const { ownerBookingCar, setOwnerBookingCar, fetchUserBookings } =
+    useContext(AuthContext);
 
-  console.log(ownerBookingCar);
   const HandleStatusCar = async (carId, status) => {
     try {
       const response = await api.post("/api/v1/carbooking/CarStatus", {
@@ -12,6 +12,10 @@ function OwnerManageBookings() {
         status,
       });
       console.log(response);
+      setOwnerBookingCar((prev) =>
+        prev.map((car) => (car._id === carId ? { ...car, status } : car)),
+      );
+      await fetchUserBookings();
     } catch (error) {
       console.log(error);
     }
@@ -65,9 +69,10 @@ function OwnerManageBookings() {
                       <select
                         name=""
                         id=""
-                        value={ownerBookingCar.status}
+                        disabled={car.status.toString() === "completed"}
+                        value={car.status}
                         onChange={(e) =>
-                          HandleStatusCar(ownerBookingCar._id, e.target.value)
+                          HandleStatusCar(car._id, e.target.value)
                         }
                       >
                         <option value="pending">Pending</option>

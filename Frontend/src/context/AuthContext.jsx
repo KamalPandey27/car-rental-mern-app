@@ -7,31 +7,41 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [cars, setCars] = useState([]);
   const [bookingCar, setBookingCar] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [ownerBookingCar, setOwnerBookingCar] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const fetchCars = async () => {
+    const res = await api.get("/api/v1/car/getAllCars");
+    setCars(res.data.data);
+  };
+
+  const fetchUserBookings = async () => {
+    const res = await api.get("/api/v1/carbooking/getCoustomerBookings");
+    setBookingCar(res.data.data);
+  };
+
+  const fetchOwnerBookings = async () => {
+    const res = await api.get("/api/v1/carbooking/ownerBookingCar");
+    setOwnerBookingCar(res.data.data);
+  };
+
+  const fetchUserData = async () => {
+    const res = await api.get("/api/v1/user/getUserData");
+    setUser(res.data.data);
+  };
+
   useEffect(() => {
     const initAuth = async () => {
       try {
-        // PUBLIC — should always run
-        const carsRes = await api.get("/api/v1/car/getAllCars");
-        setCars(carsRes.data.data);
-      } catch (err) {
-        console.log("Cars fetch error:", err);
-      }
-
-      try {
-        // AUTH — may fail if not logged in
-        const [userRes, bookingCarRes, ownerBookRes] = await Promise.all([
-          api.get("/api/v1/user/getUserData"),
-          api.get("/api/v1/carbooking/getCoustomerBookings"),
-          api.get("/api/v1/carbooking/ownerBookingCar"),
+        await fetchCars();
+        await Promise.all([
+          fetchUserData(),
+          fetchUserBookings(),
+          fetchOwnerBookings(),
         ]);
-        setOwnerBookingCar(ownerBookRes.data.data);
-        setUser(userRes.data.data);
-        setBookingCar(bookingCarRes.data.data);
       } catch (err) {
-        console.log("User fetch error:", err);
         setUser(null);
+        console.log(err);
       } finally {
         setLoading(false);
       }
@@ -45,13 +55,16 @@ export const AuthProvider = ({ children }) => {
       value={{
         user,
         setUser,
-        cars,
         setCars,
-        loading,
+        cars,
         bookingCar,
-        setBookingCar,
         ownerBookingCar,
+        loading,
+        fetchUserBookings, // ✅ exposed
+        fetchOwnerBookings, // ✅ exposed
+        setBookingCar,
         setOwnerBookingCar,
+        fetchCars,
       }}
     >
       {children}

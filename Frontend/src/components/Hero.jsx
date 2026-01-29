@@ -15,6 +15,7 @@ function Hero() {
   const [selectLocation, setSelectLocation] = useState(
     "Please select location",
   );
+
   const [searchError, setSearchError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -47,16 +48,17 @@ function Hero() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+
     try {
       const response = await api.post("/api/v1/car/search", { selectLocation });
-      setCars(response.data.data);
       console.log(response);
-      if (response.data.success) {
-        navigate("/cars");
-      }
+      setCars(response.data.data);
+      navigate("/cars");
     } catch (error) {
-      console.log(error.response);
-      setSearchError(error.response.data.message);
+      setSearchError(
+        error.response?.data?.message ||
+          "Something went wrong. Please try again.",
+      );
     } finally {
       setLoading(false);
     }

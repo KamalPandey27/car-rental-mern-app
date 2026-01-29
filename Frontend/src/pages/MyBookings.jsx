@@ -49,7 +49,7 @@ function MyBookings() {
                           Booking #{index + 1}
                         </span>
                         <span className="px-3 py-1 text-xs rounded-full bg-red-400/15 text-red-600">
-                          Pending
+                          {cars.status}
                         </span>
                       </div>
 

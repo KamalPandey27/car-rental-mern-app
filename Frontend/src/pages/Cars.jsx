@@ -14,15 +14,17 @@ function Cars() {
     const fetchSearch = async () => {
       try {
         const response = await api.post("/api/v1/car/searchCar", { search });
+        console.log(response);
         if (response.data.success) {
           setFilteredCars(response.data.data);
         }
       } catch (error) {
         console.log(error);
+        setFilteredCars([]);
       }
     };
     if (search.trim() === "") {
-      setFilteredCars(cars); // reset to all cars
+      setFilteredCars(cars.filter((car) => car.isListed)); // reset to all cars
     } else {
       fetchSearch();
     }
@@ -56,7 +58,7 @@ function Cars() {
           </div>
         </div>
         <div className="text-gray-500/90 mt-10 ml-35">
-          Showing {cars.length} Cars
+          Showing {filteredCars.length} Cars
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-10 px-6 md:px-16 lg:px-24 xl:px-32">
