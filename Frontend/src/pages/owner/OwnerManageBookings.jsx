@@ -7,15 +7,17 @@ function OwnerManageBookings() {
 
   const HandleStatusCar = async (carId, status) => {
     try {
-      const response = await api.post("/api/v1/carbooking/CarStatus", {
+      await api.post("/api/v1/carbooking/CarStatus", {
         carId,
         status,
       });
-      console.log(response);
+
       setOwnerBookingCar((prev) =>
         prev.map((car) => (car._id === carId ? { ...car, status } : car)),
       );
+
       await fetchUserBookings();
+      
     } catch (error) {
       console.log(error);
     }

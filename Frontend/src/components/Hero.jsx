@@ -19,6 +19,7 @@ function Hero() {
   const [searchError, setSearchError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
   useEffect(() => {
     const fetchState = async () => {
       try {
@@ -50,10 +51,11 @@ function Hero() {
     setLoading(true);
 
     try {
+      
       const response = await api.post("/api/v1/car/search", { selectLocation });
-      console.log(response);
       setCars(response.data.data);
       navigate("/cars");
+
     } catch (error) {
       setSearchError(
         error.response?.data?.message ||

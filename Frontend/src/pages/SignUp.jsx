@@ -20,6 +20,7 @@ function SignUp({ onClose }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+
       setloginSignUploading(true);
 
       const url = loginPage ? "/api/v1/user/login" : "/api/v1/user/signup";
@@ -48,9 +49,11 @@ function SignUp({ onClose }) {
       setloginSignUploading(false);
     }
   };
+
   if (loginSignUploading) {
     return <Loader />;
   }
+  
   return (
     <>
       {showForgetPassword ? (

@@ -51,6 +51,7 @@ function AddCar() {
     formData.append("location", location);
     formData.append("description", carData.description);
     formData.append("image", carData.image);
+
     try {
       const response = await api.post("/api/v1/car/carListing", formData);
 

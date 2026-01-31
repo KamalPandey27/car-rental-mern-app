@@ -10,6 +10,7 @@ function ForgetPassword({ setForgetPassword }) {
   const [loading, setLoading] = useState(false);
   const [newPassword, setNewPassword] = useState("");
   const [responseAPI, setResponseAPI] = useState("");
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -19,7 +20,7 @@ function ForgetPassword({ setForgetPassword }) {
     }
     try {
       const response = await api.post("/api/v1/user/forgetPassword", { email });
-      console.log(response);
+
       if (response.data.success) {
         setResetPassword(true);
         setResponseAPI(response.data.message);
@@ -46,11 +47,12 @@ function ForgetPassword({ setForgetPassword }) {
         otp: OTP,
         newPassword,
       });
-      console.log(response);
+
       if (response.data.success) {
         alert("Password reset successful");
         setForgetPassword(false);
       }
+      
     } catch (error) {
       console.log(error);
       setResponseAPI(error.response.data.message);

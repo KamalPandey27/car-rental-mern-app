@@ -25,6 +25,7 @@ function Cars() {
     };
     if (search.trim() === "") {
       setFilteredCars(cars.filter((car) => car.isListed)); // reset to all cars
+      
     } else {
       fetchSearch();
     }

@@ -19,7 +19,7 @@ function CarDetails() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    console.log("click ");
+
     if (!location) {
       alert("Please select location");
       setLoading(false);
@@ -48,6 +48,7 @@ function CarDetails() {
       const days = Math.ceil(
         (new Date(returnDate) - new Date(pickupDate)) / 86400000,
       );
+
       const TotalDays = Math.max(1, days);
 
       const formData = new FormData();
@@ -60,7 +61,7 @@ function CarDetails() {
       formData.append("car", car._id);
 
       const response = await api.post("/api/v1/carbooking/bookCar", formData);
-      console.log(response);
+
       if (response.data.success) {
         alert("Car booked successfully");
         window.location.reload();
@@ -72,7 +73,7 @@ function CarDetails() {
     }
   };
   if (loading) {
-    <Loader />;
+    return <Loader />;
   }
   return (
     <>
