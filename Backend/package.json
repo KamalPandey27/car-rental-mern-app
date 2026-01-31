@@ -1,15 +1,19 @@
 {
   "name": "car-rental-backend",
   "version": "1.0.0",
-  "description": "manage car booking details ",
+  "description": "manage car booking details",
   "license": "ISC",
   "author": "Kamal",
   "type": "module",
   "main": "index.js",
   "scripts": {
     "start": "node src/index.js",
-    "dev": "nodemon -r dotenv/config --experimental-json-modules src/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon -r dotenv/config src/index.js",
+    "build": "echo \"No build step required\"",
+    "test": "echo \"No tests specified\""
+  },
+  "engines": {
+    "node": ">=18"
   },
   "dependencies": {
     "bcrypt": "^6.0.0",
@@ -17,7 +21,7 @@
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
-    "express": "^5.2.1",
+    "express": "^4.19.2",
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.1.5",
     "multer": "^2.0.2",
