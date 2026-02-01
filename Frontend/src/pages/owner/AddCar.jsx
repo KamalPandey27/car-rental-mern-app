@@ -166,7 +166,7 @@ function AddCar() {
             />
           </div>
           <div className="flex flex-col gap-2 ">
-            <label htmlFor="price">Daily Price ($)</label>
+            <label htmlFor="price">Daily Price (₹)</label>
             <input
               required
               type="number"

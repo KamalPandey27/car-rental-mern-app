@@ -118,7 +118,7 @@ function ManageCars() {
                           }
                         />
                       ) : (
-                        `$ ${car.perDayPrice}`
+                        `₹ ${car.perDayPrice}`
                       )}
                       /day
                     </td>

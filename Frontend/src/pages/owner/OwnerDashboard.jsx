@@ -116,7 +116,7 @@ function OwnerDashboard() {
                     </div>
                   </div>
                   <div>
-                    <div className="font-medium">${booking.price}</div>
+                    <div className="font-medium">₹ {booking.price}</div>
                   </div>
                   <div className="text-gray-500/90 text-sm">
                     {booking.pickupDate.split("T")[0]} -{" "}
@@ -132,7 +132,7 @@ function OwnerDashboard() {
             <div className="text-gray-500/90">Revenue for current month</div>
           </div>
           <div className="text-3xl font-semibold text-primary">
-            ${totalEaringCurrentMonth}
+            ₹ {totalEaringCurrentMonth}
           </div>
         </div>
       </div>

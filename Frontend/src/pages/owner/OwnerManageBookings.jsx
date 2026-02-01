@@ -70,8 +70,8 @@ function OwnerManageBookings() {
                       <div>{car.returnDate.split("T")[0].toString()}</div>
                       <div>{car.pickupDate.split("T")[0].toString()}</div>
                     </td>
-                    <td className="p-3">${car.price}</td>
-                    <td className="p-3">Cash</td>
+                    <td className="p-3">₹ {car.price}</td>
+                    <td className="p-3">{car.paymentMethod.toUpperCase()}</td>
                     <td>
                       <select
                         name=""

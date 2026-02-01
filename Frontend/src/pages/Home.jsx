@@ -82,8 +82,8 @@ function Home() {
                   className="max-w-14 max-h-14"
                 />
                 <span>
-                  <h4 className="md:text-xl text-[16px]">Emma Rodriguez</h4>
-                  <p className="text-sm text-gray-500/90">Barcelona, Spain</p>
+                  <h4 className="md:text-xl text-[16px]">Kirti</h4>
+                  <p className="text-sm text-gray-500/90">Delhi, India</p>
                 </span>
               </div>
               <span className="flex gap-1">
@@ -107,7 +107,7 @@ function Home() {
                 />
                 <span>
                   <h4 className="md:text-xl text-[16px]">John Smith</h4>
-                  <p className="text-sm text-gray-500/90">New York, USA</p>
+                  <p className="text-sm text-gray-500/90">Panipat , India</p>
                 </span>
               </div>
               <span className="flex gap-1">
@@ -130,8 +130,8 @@ function Home() {
                   className="max-w-14 max-h-14"
                 />
                 <span>
-                  <h4 className="md:text-xl text-[16px]">Ava Johnson</h4>
-                  <p className="text-sm text-gray-500/90">Sydney, Australia</p>
+                  <h4 className="md:text-xl text-[16px]">Swati</h4>
+                  <p className="text-sm text-gray-500/90">Gurgaon , India</p>
                 </span>
               </div>
               <span className="flex gap-1">

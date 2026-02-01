@@ -25,7 +25,7 @@ function CarCard({ item }) {
             </p>
           )}
           <div className="absolute bottom-4 right-4 bg-black/80 backdrop-blur-sm text-white px-3 py-2 rounded-lg">
-            <span className="font-semibold">$ {item.perDayPrice}</span>
+            <span className="font-semibold"> ₹ {item.perDayPrice}</span>
             <span className="text-sm text-white/80"> / day</span>
           </div>
         </div>
