@@ -1,82 +1,63 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { assets } from "../assets/assets";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
-import api from "../api/axios";
 import Location from "../components/Location";
-import Loader from "./Loader";
+import { useNavigate } from "react-router-dom";
 function CarDetails() {
   const { id } = useParams();
-  const { cars } = useContext(AuthContext);
+  const { cars, fetchCars } = useContext(AuthContext);
   const [pickupDate, setPickupDate] = useState("");
   const [returnDate, setReturnDate] = useState("");
   const [location, setLocation] = useState("");
-  const [loading, setLoading] = useState(false);
 
+  const navigate = useNavigate();
   const car = cars.find((item) => String(item._id) === id);
+
+  useEffect(() => {
+    fetchCars();
+  });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
 
-    if (!location) {
-      alert("Please select location");
-      setLoading(false);
+    if (!car.isAvailable) {
+      alert("Car is already booked");
+    }
+
+    if (!location || !pickupDate || !returnDate) {
+      alert("Fill all details");
       return;
     }
 
-    try {
-      if (!pickupDate || !returnDate) {
-        alert("Please select both dates");
-        return;
-      }
-
-      if (new Date(returnDate) < new Date(pickupDate)) {
-        alert("Please select correct return date");
-        return;
-      }
-
-      // JavaScript converts the string into a Date object:
-      // JavaScript internally compares timestamps (milliseconds since Jan 1, 1970)
-
-      if (!car.isAvailable) {
-        alert("Car is already booked");
-        return;
-      }
-
-      const days = Math.ceil(
-        (new Date(returnDate) - new Date(pickupDate)) / 86400000,
-      );
-
-      const TotalDays = Math.max(1, days);
-
-      const formData = new FormData();
-      formData.append("pickupDate", pickupDate);
-      formData.append("returnDate", returnDate);
-      formData.append("location", location);
-      formData.append("totalDays", TotalDays);
-      formData.append("totalAmount", car.perDayPrice * TotalDays);
-      formData.append("owner", car.owner);
-      formData.append("car", car._id);
-
-      const response = await api.post("/api/v1/carbooking/bookCar", formData);
-
-      if (response.data.success) {
-        alert("Car booked successfully");
-        window.location.reload();
-      }
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
+    if (new Date(returnDate) < new Date(pickupDate)) {
+      alert("Please select correct return date");
+      return;
     }
+
+    const days = Math.ceil(
+      (new Date(returnDate) - new Date(pickupDate)) / 86400000,
+    );
+    const totalDays = Math.max(1, days);
+    const totalAmount = car.perDayPrice * totalDays;
+
+    navigate("/payment", {
+      state: {
+        pickupDate,
+        returnDate,
+        location,
+        totalDays,
+        totalAmount,
+        carId: car._id,
+        owner: car.owner,
+      },
+    });
   };
-  if (loading) {
-    return <Loader />;
-  }
+
   return (
     <>
+      {/* {loading && <Loader />} */}
       <div className="mt-35 w-[80%] m-auto flex justify-between gap-5 lg:flex-row flex-col relative">
         <Link
           to="/cars"

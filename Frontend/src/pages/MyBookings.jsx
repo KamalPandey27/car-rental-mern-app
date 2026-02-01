@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useContext } from "react";
-
 import { assets } from "../assets/assets";
 import { AuthContext } from "../context/AuthContext";
 function MyBookings() {
-  const { bookingCar } = useContext(AuthContext);
-
+  const { bookingCar, fetchUserBookings } = useContext(AuthContext);
+  useEffect(() => {
+    fetchUserBookings();
+  });
   return (
     <>
       <section className=" w-full sm:p-20 p-8 my-15 pt-18.25 bg-light">
@@ -38,7 +39,7 @@ function MyBookings() {
                         </span>
                         <span className="text-gray-500">
                           {cars.car.year} - {cars.car.category} -{" "}
-                          {cars.location}
+                          {cars.car.location}
                         </span>
                       </div>
                     </div>
@@ -68,17 +69,30 @@ function MyBookings() {
                         </div>
                       </div>
 
-                      <div className="flex items-start gap-2 mt-3">
-                        <img
-                          src={assets.location_icon_colored}
-                          alt="location_icon"
-                          className="w-4 h-4 mt-1"
-                        />
-                        <div className="flex flex-col">
-                          <span className="text-gray-500">
-                            Pick-up Location
-                          </span>
-                          <span>{cars.location}</span>
+                      <div className=" mt-3 flex flex-col gap-2">
+                        <div className="flex items-start gap-2">
+                          <img
+                            src={assets.location_icon_colored}
+                            alt="location_icon"
+                            className="w-4 h-4 mt-1"
+                          />
+                          <div className="flex flex-col">
+                            <span className="text-gray-500">
+                              Pick-up Location
+                            </span>
+                            <span>{cars.car.location}</span>
+                          </div>
+                        </div>
+                        <div className="flex items-start gap-2">
+                          <img
+                            src={assets.location_icon_colored}
+                            alt="location_icon"
+                            className="w-4 h-4 mt-1"
+                          />
+                          <div className="flex flex-col">
+                            <span className="text-gray-500">Drop Location</span>
+                            <span>{cars.location}</span>
+                          </div>
                         </div>
                       </div>
                     </div>

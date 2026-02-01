@@ -134,6 +134,7 @@ const getUserData = asyncHandler(async (req, res) => {
       .status(200)
       .json(new ApiResponse(200, user, "User fetched via access token"));
   } catch (error) {
+    // 2️⃣ If access token expired, try refresh token
     if (!refreshToken) {
       throw new ApiError(401, "unauthorized request");
     }
@@ -154,6 +155,7 @@ const getUserData = asyncHandler(async (req, res) => {
     const verifiedUser = await User.findById(user._id).select(
       "-password -refreshToken",
     );
+
     return res
       .status(200)
       .cookie("accessToken", newAccessToken, option)
@@ -167,6 +169,7 @@ const AddUserAvatar = asyncHandler(async (req, res) => {
   if (!localFilePath) {
     throw new ApiError(401, "File not get");
   }
+
   const uploadedImage = await uploadOnCloudinary(localFilePath);
 
   if (!uploadedImage) {
@@ -201,6 +204,7 @@ const forgetPassword = asyncHandler(async (req, res) => {
   if (!email) {
     throw new ApiError(400, "Please provide your email");
   }
+
   const user = await User.findOne({ email });
 
   if (!user) {

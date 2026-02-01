@@ -18,6 +18,7 @@ import CarDetails from "./components/CarDetails";
 import Loader from "./components/Loader";
 import { useContext } from "react";
 import { AuthContext } from "./context/AuthContext";
+import PaymentPage from "./components/PaymentPage";
 const App = () => {
   const { loading } = useContext(AuthContext);
   if (loading) {
@@ -31,7 +32,7 @@ const App = () => {
         <Route path="cars" element={<Cars />} />
         <Route path="mybookings" element={<MyBookings />} />
         <Route path="car-details/:id" element={<CarDetails />} />
-
+        <Route path="/payment" element={<PaymentPage />} />
         {/* OWNER DASHBOARD (NESTED ROUTES) */}
 
         <Route path="owner" element={<DashboardLayout />}>

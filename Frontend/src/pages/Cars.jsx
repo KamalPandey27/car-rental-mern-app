@@ -6,10 +6,14 @@ import CarCard from "../components/CarCard";
 import { useEffect } from "react";
 import api from "../api/axios";
 function Cars() {
-  const { cars } = useContext(AuthContext);
+  const { cars, fetchCars } = useContext(AuthContext);
   const [filteredCars, setFilteredCars] = useState([]);
-
   const [search, setSearch] = useState("");
+
+  useEffect(() => {
+    fetchCars();
+  });
+
   useEffect(() => {
     const fetchSearch = async () => {
       try {
@@ -25,7 +29,6 @@ function Cars() {
     };
     if (search.trim() === "") {
       setFilteredCars(cars.filter((car) => car.isListed)); // reset to all cars
-      
     } else {
       fetchSearch();
     }

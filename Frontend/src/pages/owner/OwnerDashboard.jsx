@@ -13,7 +13,7 @@ function OwnerDashboard() {
   const carStatusPending = ownerBookingCar.filter((car) => {
     return car.status?.toString() === "pending";
   });
-  
+
   const carStatusConfirmed = ownerBookingCar.filter((car) => {
     return car.status?.toString() === "confirmed";
   });
@@ -92,35 +92,38 @@ function OwnerDashboard() {
           <div className="text-xl font-medium">Recent Bookings</div>
           <div className="text-gray-500/90">Latest customer bookings</div>
           <div className="mt-3 flex flex-col w-full">
-            {ownerBookingCar.slice(0, 3).map((booking) => (
-              <div
-                key={booking._id}
-                className=" flex sm:items-center justify-between sm:flex-row flex-col p-2 border border-gray-400/90 rounded-lg mt-2 sm:gap-0 gap-3"
-              >
-                <div className="flex items-center gap-2">
-                  <img
-                    src={booking.car.image.url}
-                    alt="car"
-                    className="w-10 h-10 rounded-lg object-cover"
-                  />
-                  <div>
-                    <div className="font-medium">
-                      {booking.car.brand.toString().toUpperCase()}
-                    </div>
-                    <div className="text-gray-500/90 text-sm">
-                      {booking.customer.username.toString().toUpperCase()}
+            {ownerBookingCar
+              .slice(-3)
+              .reverse()
+              .map((booking) => (
+                <div
+                  key={booking._id}
+                  className=" flex sm:items-center justify-between sm:flex-row flex-col p-2 border border-gray-400/90 rounded-lg mt-2 sm:gap-0 gap-3"
+                >
+                  <div className="flex items-center gap-2">
+                    <img
+                      src={booking.car.image.url}
+                      alt="car"
+                      className="w-10 h-10 rounded-lg object-cover"
+                    />
+                    <div>
+                      <div className="font-medium">
+                        {booking.car.brand.toString().toUpperCase()}
+                      </div>
+                      <div className="text-gray-500/90 text-sm">
+                        {booking.customer.username.toString().toUpperCase()}
+                      </div>
                     </div>
                   </div>
+                  <div>
+                    <div className="font-medium">${booking.price}</div>
+                  </div>
+                  <div className="text-gray-500/90 text-sm">
+                    {booking.pickupDate.split("T")[0]} -{" "}
+                    {booking.returnDate.split("T")[0]}
+                  </div>
                 </div>
-                <div>
-                  <div className="font-medium">${booking.price}</div>
-                </div>
-                <div className="text-gray-500/90 text-sm">
-                  {booking.pickupDate.split("T")[0]} -{" "}
-                  {booking.returnDate.split("T")[0]}
-                </div>
-              </div>
-            ))}
+              ))}
           </div>
         </div>
         <div className="border border-gray-400/90 rounded-lg p-5 flex flex-col gap-4 w-80 h-40">

@@ -50,6 +50,11 @@ const bookingCarSchema = new Schema(
       type: String,
       required: true,
     },
+    paymentMethod: {
+      type: String,
+      enum: ["cash", "razorpay"],
+      required: true,
+    },
   },
   { timestamps: true },
 );

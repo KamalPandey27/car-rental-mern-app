@@ -19,7 +19,7 @@ const carListing = asyncHandler(async (req, res) => {
   } = req.body;
 
   const image = req.file?.path;
-  console.log(req.body, req.file);
+
   if (
     [
       brand,

@@ -1,11 +1,14 @@
 import React, { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import api from "../../api/axios";
+import { useState } from "react";
+import Loader from "../../components/Loader";
 function OwnerManageBookings() {
   const { ownerBookingCar, setOwnerBookingCar, fetchUserBookings } =
     useContext(AuthContext);
-
+  const [loading, setLoading] = useState(false);
   const HandleStatusCar = async (carId, status) => {
+    setLoading(true);
     try {
       await api.post("/api/v1/carbooking/CarStatus", {
         carId,
@@ -17,13 +20,15 @@ function OwnerManageBookings() {
       );
 
       await fetchUserBookings();
-      
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
   return (
     <>
+      {loading && <Loader />}
       <section>
         <h1 className="font-medium text-3xl">Manage Bookings</h1>
         <p className="text-sm md:text-base text-gray-500/90 mt-2 max-w-156">
