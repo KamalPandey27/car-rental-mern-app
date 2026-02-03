@@ -62,7 +62,7 @@ function SideBarOwner() {
 
           <span className="md:text-[16px] text-sm">
             {String(user.username).charAt(0).toUpperCase()}
-            {user.username.slice(1)}
+            {user.username.slice(1) || ""}
           </span>
         </div>
         <div className="py-8 ">

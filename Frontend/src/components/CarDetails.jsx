@@ -84,7 +84,7 @@ function CarDetails() {
               </span>
               <span className="text-gray-500/90 mb-5 sm:text-[16px] text-[14px]">
                 {String(car.category).charAt(0).toUpperCase()}
-                {String(car.category).slice(1)} - {car.year}
+                {String(car.category).slice(1) || ""} - {car.year}
               </span>
             </div>
           </div>
@@ -98,7 +98,7 @@ function CarDetails() {
               <span>
                 {" "}
                 {String(car.fuelType).charAt(0).toUpperCase()}
-                {String(car.fuelType).slice(1)}
+                {String(car.fuelType).slice(1) || ""}
               </span>
             </div>
             <div className="bg-light flex justify-center items-center flex-col gap-2 py-5 rounded">
@@ -106,7 +106,7 @@ function CarDetails() {
               <span className="text-center">
                 {" "}
                 {String(car.transmission).charAt(0).toUpperCase()}
-                {String(car.transmission).slice(1)}
+                {String(car.transmission).slice(1) || ""}
               </span>
             </div>
             <div className="bg-light flex justify-center items-center flex-col gap-2 py-5 rounded">

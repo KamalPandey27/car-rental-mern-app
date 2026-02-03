@@ -13,7 +13,7 @@ function NavbarOwner() {
         </Link>
         <div className="text-gray-500/90">
           Welcome , {String(user.username).charAt(0).toUpperCase()}
-          {user.username.slice(1)}
+          {user.username.slice(1) || ""}
         </div>
       </header>
     </>

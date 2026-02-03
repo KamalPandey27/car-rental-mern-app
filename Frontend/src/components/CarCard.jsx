@@ -49,16 +49,16 @@ function CarCard({ item }) {
             <div className="flex items-center text-sm text-muted-foreground">
               <img src={assets.fuel_icon} alt="fuel" className="h-4 mr-2" />
               <span>
-                {String(item.fuelType).charAt(0).toUpperCase()}
-                {String(item.fuelType).slice(1)}
+                {String(item.fuelType).charAt(0).toUpperCase() || ""}
+                {String(item.fuelType).slice(1) || ""}
               </span>
             </div>
             <div className="flex items-center text-sm text-muted-foreground">
               <img src={assets.carIcon} alt="car" className="h-4 mr-2" />
               <span>
                 {" "}
-                {String(item.transmission).charAt(0).toUpperCase()}
-                {String(item.transmission).slice(1)}
+                {String(item.transmission).charAt(0).toUpperCase() || ""}
+                {String(item.transmission).slice(1) || ""}
               </span>
             </div>
             <div className="flex items-center text-sm text-muted-foreground">
