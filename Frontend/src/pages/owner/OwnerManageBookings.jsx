@@ -1,12 +1,23 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import api from "../../api/axios";
 import { useState } from "react";
 import Loader from "../../components/Loader";
 function OwnerManageBookings() {
-  const { ownerBookingCar, setOwnerBookingCar, fetchUserBookings } =
-    useContext(AuthContext);
+  const {
+    ownerBookingCar,
+    setOwnerBookingCar,
+    fetchUserBookings,
+    fetchOwnerBookings,
+  } = useContext(AuthContext);
+
+  useEffect(() => {
+    fetchUserBookings();
+    fetchOwnerBookings();
+  }, []);
+
   const [loading, setLoading] = useState(false);
+
   const HandleStatusCar = async (carId, status) => {
     setLoading(true);
     try {
@@ -47,7 +58,7 @@ function OwnerManageBookings() {
               </tr>
             </thead>
             <tbody className="">
-              {ownerBookingCar.map((car) => {
+              {ownerBookingCar?.map((car) => {
                 return (
                   <tr className="border-t border-borderColor" id={car._id}>
                     <td>

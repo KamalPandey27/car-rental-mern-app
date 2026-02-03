@@ -9,7 +9,7 @@ export const AuthProvider = ({ children }) => {
   const [bookingCar, setBookingCar] = useState([]);
   const [ownerBookingCar, setOwnerBookingCar] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  console.log(cars);
   const fetchCars = async () => {
     const res = await api.get("/api/v1/car/getAllCars");
     setCars(res.data.data);

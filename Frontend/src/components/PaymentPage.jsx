@@ -16,7 +16,7 @@ const PaymentPage = () => {
     if (!cars.length) {
       fetchCars();
     }
-  });
+  }, [fetchCars, cars.length]);
 
   // 🔴 VERY IMPORTANT: Guard against direct access / refresh
   if (!state) {
@@ -63,6 +63,7 @@ const PaymentPage = () => {
       console.log("Cash booking error:", error);
     } finally {
       setLoading(false);
+      navigate("/mybookings", { replace: true });
     }
   };
 
@@ -99,7 +100,7 @@ const PaymentPage = () => {
           </>
         ) : (
           <button className="w-full bg-gray-400 text-white py-3 rounded cursor-not-allowed">
-            Car is already booked
+            Car Booked
           </button>
         )}
       </div>

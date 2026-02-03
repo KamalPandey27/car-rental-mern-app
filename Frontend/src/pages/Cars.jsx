@@ -12,7 +12,7 @@ function Cars() {
 
   useEffect(() => {
     fetchCars();
-  });
+  }, [fetchCars]);
 
   useEffect(() => {
     const fetchSearch = async () => {
@@ -27,10 +27,11 @@ function Cars() {
         setFilteredCars([]);
       }
     };
-    if (search.trim() === "") {
-      setFilteredCars(cars?.filter((car) => car.isListed)); // reset to all cars
-    } else {
+
+    if (search.trim() !== "") {
       fetchSearch();
+    } else {
+      setFilteredCars(cars?.filter((car) => car.isListed));
     }
   }, [search, cars]);
 
@@ -62,7 +63,7 @@ function Cars() {
           </div>
         </div>
         <div className="text-gray-500/90 mt-10 ml-35">
-          Showing {filteredCars.length} Cars
+          Showing {filteredCars?.length} Cars
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-10 px-6 md:px-16 lg:px-24 xl:px-32">

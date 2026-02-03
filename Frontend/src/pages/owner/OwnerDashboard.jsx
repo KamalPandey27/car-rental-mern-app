@@ -1,10 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { assets } from "../../assets/assets";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 
 function OwnerDashboard() {
-  const { cars, user, ownerBookingCar } = useContext(AuthContext);
+  const { cars, user, ownerBookingCar, fetchOwnerBookings, fetchCars } =
+    useContext(AuthContext);
+
+  useEffect(() => {
+    fetchOwnerBookings();
+    fetchCars();
+  }, []);
 
   const myCar = cars?.filter((car) => {
     return user._id?.toString() === car.owner?.toString();
