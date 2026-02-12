@@ -6,9 +6,9 @@ import app from "./app.js";
 
 connectDB()
   .then(() => {
-    const PORT = process.env.PORT || "0.0.0.0";
+    const PORT = process.env.PORT || 5000;
 
-    app.listen(PORT, () => {
+    app.listen(PORT, "0.0.0.0", () => {
       console.log("Server Run on Port : ", PORT);
     });
   })
