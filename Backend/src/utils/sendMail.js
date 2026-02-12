@@ -1,27 +1,27 @@
-import nodemailer from "nodemailer";
+import Brevo from "@getbrevo/brevo";
 
 export const sendEmail = async ({ to, subject, html }) => {
   try {
-    const transporter = nodemailer.createTransport({
-      host: "smtp-relay.brevo.com",
-      port: 587,
-      secure: false,
-      auth: {
-        user: process.env.BREVO_LOGIN,
-        pass: process.env.BREVO_SMTP_KEY,
+    const apiInstance = new Brevo.TransactionalEmailsApi();
+
+    apiInstance.setApiKey(
+      Brevo.TransactionalEmailsApiApiKeys.apiKey,
+      process.env.BREVO_API_KEY,
+    );
+
+    await apiInstance.sendTransacEmail({
+      sender: {
+        email: process.env.EMAIL_USER,
+        name: "Car Rental",
       },
-    });
-
-    await transporter.sendMail({
-      from: process.env.EMAIL_USER,
-      to,
+      to: [{ email: to }],
       subject,
-      html,
+      htmlContent: html,
     });
 
-    console.log("Email sent successfully via Brevo");
+    console.log("Email sent successfully via Brevo API");
   } catch (error) {
-    console.error("Brevo email error:", error);
+    console.error("Brevo API error:", error.response?.body || error);
     throw error;
   }
 };
