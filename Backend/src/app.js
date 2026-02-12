@@ -10,6 +10,7 @@ app.use(
     credentials: true,
   }),
 );
+
 app.get("/", (req, res) => {
   res.status(200).json({
     success: true,
