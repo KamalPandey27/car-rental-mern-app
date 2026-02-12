@@ -12,7 +12,7 @@ export const sendEmail = async ({ to, subject, html }) => {
     await apiInstance.sendTransacEmail({
       sender: {
         email: process.env.EMAIL_USER,
-        name: "Car Rental",
+        name: "car-rental",
       },
       to: [{ email: to }],
       subject,
