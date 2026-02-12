@@ -9,7 +9,7 @@ const PaymentPage = () => {
   const locationData = useLocation();
   const state = locationData.state;
 
-  const { cars, fetchCars } = useContext(AuthContext);
+  const { cars, fetchCars, fetchUserBookings } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -56,7 +56,8 @@ const PaymentPage = () => {
       });
 
       alert("Booking confirmed with Cash");
-
+      await fetchCars();
+      await fetchUserBookings();
       // ✅ Replace history to avoid going back to payment
       navigate("/mybookings", { replace: true });
     } catch (error) {

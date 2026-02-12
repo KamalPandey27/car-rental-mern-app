@@ -60,8 +60,8 @@ export const AuthProvider = ({ children }) => {
         bookingCar,
         ownerBookingCar,
         loading,
-        fetchUserBookings, // ✅ exposed
-        fetchOwnerBookings, // ✅ exposed
+        fetchUserBookings,
+        fetchOwnerBookings,
         setBookingCar,
         setOwnerBookingCar,
         fetchCars,

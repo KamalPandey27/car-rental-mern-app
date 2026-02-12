@@ -156,7 +156,7 @@ const CarStatus = asyncHandler(async (req, res) => {
     <h2>📢 Booking Status Updated</h2>
     <p>Hello <strong>${booking.customer.username}</strong>,</p>
     <p>Your booking for <strong>${booking.car.brand} ${booking.car.model}</strong> 
-    has been <strong>${status}</strong>.</p>
+    has been <strong>${booking.status}</strong>.</p>
     <p>Thank you for using our service 🚗</p>
   `,
   });
