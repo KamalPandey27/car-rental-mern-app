@@ -6,8 +6,8 @@ const app = express();
 
 app.use(
   cors({
-    origin: true, // dynamically reflect request origin
-    credentials: true, // allow cookies
+    origin: process.env.CORS_ORIGIN,
+    credentials: true,
   }),
 );
 
