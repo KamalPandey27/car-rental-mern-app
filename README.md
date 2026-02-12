@@ -154,8 +154,8 @@ car-rental-mern-app/
 
 🌐 Live Demo
 
-Frontend: (to be added after deployment)
-Backend API: (to be added after deployment)
+Frontend: https://car-rental-mern-app-1war.vercel.app/
+Backend API: https://car-rental-mern-app.onrender.com/
 
 ⚙️ Environment Variables
 
