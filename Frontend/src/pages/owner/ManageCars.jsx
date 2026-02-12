@@ -32,7 +32,7 @@ function ManageCars() {
           carId: "",
         });
 
-        fetchCars();
+        await fetchCars();
       }
     } catch (error) {
       console.log(error);
