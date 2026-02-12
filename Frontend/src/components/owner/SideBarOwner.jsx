@@ -39,7 +39,7 @@ function SideBarOwner() {
         <div className="flex flex-col gap-2 justify-center items-center ">
           <label htmlFor="image" className="cursor-pointer relative group">
             <img
-              src={user.avatar.url}
+              src={user?.avatar?.url}
               alt="user_profile"
               className="w-10 h-10 md:w-12 md:h-12 rounded-full object-cover"
             />
@@ -61,12 +61,12 @@ function SideBarOwner() {
           </label>
 
           <span className="md:text-[16px] text-sm">
-            {String(user.username).charAt(0).toUpperCase()}
-            {user.username.slice(1) || ""}
+            {String(user?.username).charAt(0).toUpperCase()}
+            {user?.username.slice(1) || ""}
           </span>
         </div>
         <div className="py-8 ">
-          {ownerMenuLinks.map((item, index) => {
+          {ownerMenuLinks?.map((item, index) => {
             return (
               <NavLink
                 key={index}
