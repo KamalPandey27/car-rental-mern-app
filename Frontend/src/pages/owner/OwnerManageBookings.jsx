@@ -4,12 +4,8 @@ import api from "../../api/axios";
 import { useState } from "react";
 import Loader from "../../components/Loader";
 function OwnerManageBookings() {
-  const {
-    ownerBookingCar,
-    setOwnerBookingCar,
-    fetchUserBookings,
-    fetchOwnerBookings,
-  } = useContext(AuthContext);
+  const { ownerBookingCar, fetchUserBookings, fetchOwnerBookings, fetchCars } =
+    useContext(AuthContext);
 
   useEffect(() => {
     fetchUserBookings();
@@ -26,10 +22,8 @@ function OwnerManageBookings() {
         status,
       });
 
-      setOwnerBookingCar((prev) =>
-        prev.map((car) => (car._id === carId ? { ...car, status } : car)),
-      );
-
+      await fetchCars();
+      await fetchOwnerBookings();
       await fetchUserBookings();
     } catch (error) {
       console.log(error);
