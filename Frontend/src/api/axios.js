@@ -5,11 +5,6 @@ const api = axios.create({
   withCredentials: true,
 });
 
-// const api = axios.create({
-//   baseURL: "/api",
-//   withCredentials: true,
-// });
-
 let isRefreshing = false;
 let failedQueue = [];
 

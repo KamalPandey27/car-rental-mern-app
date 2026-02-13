@@ -10,7 +10,7 @@ import { sendEmail } from "../utils/sendMail.js";
 const option = {
   httpOnly: true,
   secure: process.env.NODE_ENV === "production",
-  sameSite: "lax",
+  sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
 };
 console.log("cookie option", option);
 // for production use this
