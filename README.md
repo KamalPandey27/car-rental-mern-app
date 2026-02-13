@@ -150,7 +150,7 @@ car-rental-mern-app/
    ```
 
 6. **Access the Application**
-   - Frontend: https://car-rental-mern-app-vert.vercel.app/
+   - Frontend: https://car-rental-mern-app-1.onrender.com/
    - Backend API: https://car-rental-mern-app.onrender.com
 
 ## 📱 Pages & Routes
