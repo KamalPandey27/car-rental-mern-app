@@ -1,14 +1,14 @@
 import axios from "axios";
 
-// const api = axios.create({
-//   baseURL: import.meta.env.VITE_API_BASE_URL,
-//   withCredentials: true,
-// });
-
 const api = axios.create({
-  baseURL: "/api",
+  baseURL: import.meta.env.VITE_API_BASE_URL,
   withCredentials: true,
 });
+
+// const api = axios.create({
+//   baseURL: "/api",
+//   withCredentials: true,
+// });
 
 let isRefreshing = false;
 let failedQueue = [];
