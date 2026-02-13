@@ -5,9 +5,9 @@ import { AuthContext } from "../context/AuthContext";
 import { useContext } from "react";
 import Loader from "../components/Loader";
 import api from "../api/axios";
-
+import { toast } from "react-toastify";
 function UserMenu({ showUserMenu, setshowUserMenu }) {
-  const { user, setUser } = useContext(AuthContext);
+  const { user, setUser, fetchUserBookings } = useContext(AuthContext);
   const [loggingOut, setLoggingOut] = useState(false);
   const [showForgetPassword, setForgetPassword] = useState(false);
   const handleLogout = async () => {
@@ -15,10 +15,13 @@ function UserMenu({ showUserMenu, setshowUserMenu }) {
       setLoggingOut(true);
       await api.post(`/api/v1/user/logout`);
       setUser(null);
-      setshowUserMenu();
+      setshowUserMenu(false);
+      toast.success("Logout successful!");
       localStorage.removeItem("isAuth");
+      await fetchUserBookings();
     } catch (error) {
       console.log("logout failed", error);
+      toast.error(error.response?.data?.message || "Logout failed");
     } finally {
       setLoggingOut(false);
     }

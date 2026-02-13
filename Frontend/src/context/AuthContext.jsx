@@ -9,6 +9,7 @@ export const AuthProvider = ({ children }) => {
   const [bookingCar, setBookingCar] = useState([]);
   const [ownerBookingCar, setOwnerBookingCar] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showSignUp, setShowSignUp] = useState(false);
 
   const fetchCars = async () => {
     const res = await api.get("/api/v1/car/getAllCars");
@@ -65,6 +66,8 @@ export const AuthProvider = ({ children }) => {
         setBookingCar,
         setOwnerBookingCar,
         fetchCars,
+        showSignUp,
+        setShowSignUp,
       }}
     >
       {children}

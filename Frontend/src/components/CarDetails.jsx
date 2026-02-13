@@ -5,9 +5,10 @@ import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import Location from "../components/Location";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 function CarDetails() {
   const { id } = useParams();
-  const { cars, fetchCars } = useContext(AuthContext);
+  const { cars, fetchCars, user, setShowSignUp } = useContext(AuthContext);
   const [pickupDate, setPickupDate] = useState("");
   const [returnDate, setReturnDate] = useState("");
   const [location, setLocation] = useState("");
@@ -21,18 +22,24 @@ function CarDetails() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!user) {
+      toast.error("Please login to book the car");
+      setShowSignUp(true);
+      return;
+    }
 
     if (!car.isAvailable) {
-      alert("Car is already booked");
+      toast.error("Car is already booked");
+      return;
     }
 
     if (!location || !pickupDate || !returnDate) {
-      alert("Fill all details");
+      toast.error("Please fill all details");
       return;
     }
 
     if (new Date(returnDate) < new Date(pickupDate)) {
-      alert("Please select correct return date");
+      toast.error("Return date cannot be before pickup date");
       return;
     }
 

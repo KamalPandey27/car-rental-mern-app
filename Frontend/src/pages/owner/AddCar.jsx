@@ -5,6 +5,7 @@ import Loader from "../../components/Loader";
 
 import Location from "../../components/Location";
 import { AuthContext } from "../../context/AuthContext";
+import { toast } from "react-toastify";
 function AddCar() {
   const { fetchCars, fetchOwnerBookings } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
@@ -27,11 +28,12 @@ function AddCar() {
     e.preventDefault();
 
     if (carData.image === null) {
-      alert("please upload car image");
+      toast.error("Please upload a car image.");
+      return;
     }
 
     if (!location) {
-      alert("Please select location");
+      toast.error("Please select location");
       setLoading(false);
       return;
     }
@@ -72,7 +74,7 @@ function AddCar() {
           image: null,
         });
         setLocation("");
-        alert("Car Listed Successfully");
+        toast.success("Car Listed Successfully");
       }
     } catch (error) {
       console.log(error);

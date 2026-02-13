@@ -3,6 +3,7 @@ import { assets } from "../assets/assets";
 import { AuthContext } from "../context/AuthContext";
 import Loader from "../components/Loader";
 import api from "../api/axios";
+import { toast } from "react-toastify";
 import ForgetPassword from "../components/ForgetPassword";
 function SignUp({ onClose }) {
   const { setUser } = useContext(AuthContext);
@@ -20,7 +21,6 @@ function SignUp({ onClose }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-
       setloginSignUploading(true);
 
       const url = loginPage ? "/api/v1/user/login" : "/api/v1/user/signup";
@@ -29,7 +29,7 @@ function SignUp({ onClose }) {
       if (response.data.success === true) {
         setUser(response.data.data);
         localStorage.setItem("isAuth", true);
-        window.location.reload();
+        toast.success("Login successful!");
         setFormData({
           username: "",
           email: "",
@@ -39,6 +39,7 @@ function SignUp({ onClose }) {
       }
     } catch (error) {
       console.log(error.response);
+      toast.error(error.response?.data?.message || "Something went wrong");
       setUserDetails(error.response?.data?.message || "Something went wrong");
       setFormData({
         username: "",
@@ -53,7 +54,7 @@ function SignUp({ onClose }) {
   if (loginSignUploading) {
     return <Loader />;
   }
-  
+
   return (
     <>
       {showForgetPassword ? (

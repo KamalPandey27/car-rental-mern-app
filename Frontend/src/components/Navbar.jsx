@@ -4,11 +4,12 @@ import { assets } from "../assets/assets";
 import { SignUp } from "../pages";
 import { AuthContext } from "../context/AuthContext";
 import UserMenu from "./UserMenu";
+import { toast } from "react-toastify";
 function Navbar() {
-  const { user } = useContext(AuthContext);
+  const { user, showSignUp, setShowSignUp } = useContext(AuthContext);
   const [open, setOpen] = useState(false);
   const menuRef = useRef(null);
-  const [showSignUp, setShowSignUp] = useState(false);
+  // const [showSignUp, setShowSignUp] = useState(false);
   const [showUserMenu, setshowUserMenu] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
@@ -31,7 +32,8 @@ function Navbar() {
     if (user) {
       navigate("/owner");
     } else {
-      alert("please login to access dashboard");
+      toast.error("Please login to access the dashboard");
+      setShowSignUp(true);
     }
   };
   return (

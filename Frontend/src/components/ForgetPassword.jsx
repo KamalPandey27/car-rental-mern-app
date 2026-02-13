@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { assets } from "../assets/assets";
 import api from "../api/axios";
 import Loader from "../components/Loader";
+import { toast } from "react-toastify";
 function ForgetPassword({ setForgetPassword }) {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
@@ -49,10 +50,11 @@ function ForgetPassword({ setForgetPassword }) {
       });
 
       if (response.data.success) {
-        alert("Password reset successful");
+        toast.success(
+          "Password reset successful! Please login with your new password.",
+        );
         setForgetPassword(false);
       }
-      
     } catch (error) {
       console.log(error);
       setResponseAPI(error.response.data.message);

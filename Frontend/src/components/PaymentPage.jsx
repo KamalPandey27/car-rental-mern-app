@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import api from "../api/axios";
 import Loader from "./Loader";
 import { AuthContext } from "../context/AuthContext";
-
+import { toast } from "react-toastify";
 const PaymentPage = () => {
   const navigate = useNavigate();
   const locationData = useLocation();
@@ -55,16 +55,16 @@ const PaymentPage = () => {
         paymentMethod: "cash",
       });
 
-      alert("Booking confirmed with Cash");
+      toast.success("Car booked successfully! Please pay at pickup.");
       await fetchCars();
       await fetchUserBookings();
-      // ✅ Replace history to avoid going back to payment
       navigate("/mybookings", { replace: true });
+      window.location.reload();
     } catch (error) {
       console.log("Cash booking error:", error);
+      toast.error(error.response?.data?.message || "Failed to book car.");
     } finally {
       setLoading(false);
-      navigate("/mybookings", { replace: true });
     }
   };
 
@@ -94,7 +94,9 @@ const PaymentPage = () => {
 
             <button
               className="w-full bg-blue-600 text-white py-3 rounded"
-              onClick={() => alert("Razorpay coming next")}
+              onClick={() => {
+                toast.info("Razorpay coming next");
+              }}
             >
               Pay with Razorpay
             </button>
