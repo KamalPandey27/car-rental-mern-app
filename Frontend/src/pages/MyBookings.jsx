@@ -103,7 +103,7 @@ function MyBookings() {
                     <div className="flex flex-col gap-1 text-sm text-gray-500 text-right">
                       <span>Total Price</span>
                       <span className="text-2xl font-semibold text-primary">
-                        ₹ {cars.car.perDayPrice * cars.totalDays}
+                        ₹-{cars.car.perDayPrice * cars.totalDays}
                       </span>
                       <span>
                         Booked on {new Date().toISOString().split("T")[0]}

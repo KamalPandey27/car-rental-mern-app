@@ -120,8 +120,6 @@ function Navbar() {
                     SignUp
                   </button>
                 )}
-
-                {showSignUp && <SignUp onClose={() => setShowSignUp(false)} />}
               </div>
             </li>
           </ul>
@@ -208,8 +206,6 @@ function Navbar() {
                     SignUp
                   </button>
                 )}
-
-                {showSignUp && <SignUp onClose={() => setShowSignUp(false)} />}
               </div>
             </li>
 
@@ -221,6 +217,7 @@ function Navbar() {
             </button>
           </ul>
         </nav>
+        {showSignUp && <SignUp onClose={() => setShowSignUp(false)} />}
       </header>
     </>
   );

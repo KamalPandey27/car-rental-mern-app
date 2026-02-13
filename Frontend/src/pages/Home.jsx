@@ -5,8 +5,18 @@ import CarCard from "../components/CarCard";
 import Hero from "../components/Hero";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 function Home() {
-  const { cars } = useContext(AuthContext);
+  const { cars, user } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const handleClick = () => {
+    if (!user) {
+      toast.error("Please login to list your car");
+    } else {
+      navigate("/owner/add-car");
+    }
+  };
   return (
     <>
       <main className="overflow-x-hidden pt-18.25">
@@ -50,6 +60,7 @@ function Home() {
             <button
               className="px-6 py-2 bg-white hover:bg-slate-100 transition-all text-primary rounded-lg text-sm mt-4 cursor-pointer"
               tabIndex="0"
+              onClick={handleClick}
             >
               List your car
             </button>

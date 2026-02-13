@@ -31,7 +31,7 @@ function Footer() {
             <div className="flex flex-col gap-3 text-sm text-gray-500/90 ">
               <span className="mb-3 text-lg text-black">Quick Links</span>
               <Link to="/">Home</Link>
-              <Link to="/">Browse Cars</Link>
+              <Link to="/cars">Browse Cars</Link>
               <Link to="/">List Your Car</Link>
               <Link to="/">About Us</Link>
             </div>
@@ -46,9 +46,10 @@ function Footer() {
             <div className="flex flex-col gap-3 text-sm text-gray-500/90">
               <span className="mb-3 text-lg text-black">Contact</span>
               <Link to="/">1234 Luxury Drive</Link>
-              <Link to="/">San Francisco, CA 94107</Link>
-              <Link to="/">+1 234 567890</Link>
-              <Link to="/">info@example.com</Link>
+              <Link to="/">DLF Cyber City</Link>
+              <Link to="/">Gurgaon, Haryana 122002</Link>
+              <Link to="/">+91 8059159927</Link>
+              <Link to="/">info@carrental.com</Link>
             </div>
           </div>
         </div>

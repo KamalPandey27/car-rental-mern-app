@@ -5,11 +5,14 @@ import { AuthContext } from "../context/AuthContext";
 import CarCard from "../components/CarCard";
 import { useEffect } from "react";
 import api from "../api/axios";
-
 function Cars() {
-  const { cars } = useContext(AuthContext);
+  const { cars, fetchCars } = useContext(AuthContext);
   const [filteredCars, setFilteredCars] = useState([]);
   const [search, setSearch] = useState("");
+
+  useEffect(() => {
+    fetchCars();
+  }, [fetchCars]);
 
   useEffect(() => {
     const fetchSearch = async () => {
