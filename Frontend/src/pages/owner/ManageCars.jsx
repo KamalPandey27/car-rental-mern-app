@@ -68,29 +68,29 @@ function ManageCars() {
           View all listed cars, update their details, or remove them from the
           booking platform.
         </p>
-        <div className="max-w-3xl w-full rounded-md overflow-hidden border border-borderColor mt-6">
+        <div className="max-w-3xl w-full rounded-md overflow-hidden border border-borderColor sm:mt-6 mt-3">
           <table className="w-full border-collapse text-left text-sm text-gray-600">
             <thead className="text-gray-500">
               <tr>
                 <th className="p-3 font-medium">Car</th>
                 <th className="p-3 font-medium max-md:hidden">Category</th>
                 <th className="p-3 font-medium">Price</th>
-                <th className="p-3 font-medium max-md:hidden">Status</th>
+                <th className="p-3 font-medium ">Status</th>
                 <th className="p-3 font-medium">Actions</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="">
               {ownerListedCar.map((car) => {
                 return (
                   <tr
-                    className="border-t border-borderColor/50 hover:bg-gray-50/50"
+                    className="border-t border-borderColor/50 hover:bg-gray-50/50 sm:text-[16px] text-[13px]"
                     key={car._id}
                   >
-                    <td className="p-3 flex items-center gap-3">
+                    <td className="sm:p-2   flex items-center gap-3">
                       <img
                         src={car.image.url}
                         alt="Car"
-                        className="w-16 h-10 rounded-md object-cover"
+                        className="w-16 h-10 rounded-md object-cover max-sm:hidden"
                       />
                       <div>
                         <div className="font-medium">
@@ -101,10 +101,10 @@ function ManageCars() {
                         </div>
                       </div>
                     </td>
-                    <td className="p-3 max-md:hidden">
+                    <td className="sm:p-2  max-md:hidden">
                       {car.category.toString().toUpperCase()}
                     </td>
-                    <td className="p-3">
+                    <td className="sm:p-2">
                       {edit === car._id ? (
                         <input
                           type="number"
@@ -122,7 +122,7 @@ function ManageCars() {
                       )}
                       /day
                     </td>
-                    <td className="p-3 max-md:hidden">
+                    <td className="sm:p-2 ">
                       {edit === car._id ? (
                         <select
                           name=""
@@ -144,17 +144,17 @@ function ManageCars() {
                         </span>
                       )}
                     </td>
-                    <td className="p-3 flex ">
+                    <td className="sm:p-2  flex sm:flex-row flex-col items-center">
                       {edit === car._id ? (
                         <button
-                          className="text-blue-500 hover:text-blue-700 mr-2 cursor-pointer"
+                          className="text-blue-500 hover:text-blue-700 sm:mr-2 cursor-pointer"
                           onClick={() => ownerCarListingEdit()}
                         >
                           Save
                         </button>
                       ) : (
                         <button
-                          className="text-red-500 hover:text-red-700 mr-2 cursor-pointer"
+                          className="text-red-500 hover:text-red-700 sm:mr-2 cursor-pointer"
                           onClick={() => {
                             setEdit(car._id);
                             setEditData({
@@ -173,7 +173,7 @@ function ManageCars() {
                           car.isListed ? assets.eye_icon : assets.eye_close_icon
                         }
                         alt="eye_icon"
-                        className="cursor-pointer"
+                        className="cursor-pointer sm:w-auto w-10"
                         onClick={() => toggleCarListing(car._id, !car.isListed)}
                       />
                     </td>

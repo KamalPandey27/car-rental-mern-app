@@ -40,27 +40,32 @@ function OwnerManageBookings() {
           Track all customer bookings, approve or cancel requests, and manage
           booking statuses.
         </p>
-        <div className="max-w-3xl w-full rounded-md overflow-hidden border border-borderColor mt-6">
+        <div className="max-w-3xl w-full rounded-md overflow-hidden border border-borderColor lg:mt-6 md:mt-3 mt-2">
           <table className="w-full border-collapse text-left text-sm text-gray-600">
             <thead className="text-gray-500">
               <tr>
-                <th className="p-3 font-medium">Car</th>
-                <th className="p-3 font-medium max-md:hidden">Date Range</th>
-                <th className="p-3 font-medium">Total</th>
-                <th className="p-3 font-medium max-md:hidden">Payment</th>
-                <th className="p-3 font-medium">Actions</th>
+                <th className="sm:p-3 p-1 font-medium">Car</th>
+                <th className="sm:p-3 p-1 font-medium ">Date Range</th>
+                <th className="sm:p-3 p-1 font-medium">Total</th>
+                <th className="sm:p-3 p-1 font-medium max-sm:hidden ">
+                  Payment
+                </th>
+                <th className="sm:p-3 p-1 font-medium">Actions</th>
               </tr>
             </thead>
             <tbody className="">
               {ownerBookingCar?.map((car) => {
                 return (
-                  <tr className="border-t border-borderColor" id={car._id}>
+                  <tr
+                    className="border-t border-borderColor sm:text-[16px] text-[13px]"
+                    id={car._id}
+                  >
                     <td>
-                      <div className=" flex gap-2 items-center p-3">
+                      <div className=" flex gap-2 items-center sm:p-3 p-1 ">
                         <img
                           src={car.car.image.url}
                           alt=""
-                          className="w-16 h-10 rounded object-cover"
+                          className="w-16 h-10 rounded object-cover max-sm:hidden"
                         />
                         <div className="flex  flex-col gap-1">
                           <div className="font-medium">
@@ -71,12 +76,14 @@ function OwnerManageBookings() {
                         </div>
                       </div>
                     </td>
-                    <td className="p-3">
+                    <td className="sm:p-3 p-1">
                       <div>{car.returnDate.split("T")[0].toString()}</div>
                       <div>{car.pickupDate.split("T")[0].toString()}</div>
                     </td>
-                    <td className="p-3">₹ {car.price}</td>
-                    <td className="p-3">{car.paymentMethod.toUpperCase()}</td>
+                    <td className="sm:p-3 p-1">₹ {car.price}</td>
+                    <td className="sm:p-3 p-1 max-sm:hidden">
+                      {car.paymentMethod.toUpperCase()}
+                    </td>
                     <td>
                       <select
                         name=""
