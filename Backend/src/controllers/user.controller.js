@@ -12,7 +12,7 @@ const option = {
   secure: process.env.NODE_ENV === "production",
   sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
 };
-
+console.log("cookie option", option);
 // for production use this
 // const option = {
 // httpOnly: true,
