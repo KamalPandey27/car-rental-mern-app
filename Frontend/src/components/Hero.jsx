@@ -51,11 +51,9 @@ function Hero() {
     setLoading(true);
 
     try {
-      
       const response = await api.post("/api/v1/car/search", { selectLocation });
       setCars(response.data.data);
       navigate("/cars");
-
     } catch (error) {
       setSearchError(
         error.response?.data?.message ||
