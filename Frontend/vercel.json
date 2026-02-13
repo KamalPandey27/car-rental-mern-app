@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "https://car-rental-mern-app.onrender.com/$1"
+    }
+  ]
+}
