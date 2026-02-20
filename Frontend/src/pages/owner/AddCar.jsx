@@ -55,7 +55,7 @@ function AddCar() {
     formData.append("image", carData.image);
 
     try {
-      const response = await api.post("/api/v1/car/carListing", formData);
+      const response = await api.post("/v1/car/carListing", formData);
 
       if (response.data.success) {
         setLoading(false);

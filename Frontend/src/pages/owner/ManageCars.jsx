@@ -22,7 +22,7 @@ function ManageCars() {
     const payload = { ...editData };
     setLoading(true);
     try {
-      const response = await api.patch("/api/v1/car/updateCarDetails", payload);
+      const response = await api.patch("/v1/car/updateCarDetails", payload);
 
       if (response.status === 200) {
         setEdit(null);
@@ -44,7 +44,7 @@ function ManageCars() {
   const toggleCarListing = async (carId, isListed) => {
     setLoading(true);
     try {
-      const response = await api.patch("/api/v1/car/unlist", {
+      const response = await api.patch("/v1/car/unlist", {
         carId,
         isListed,
       });

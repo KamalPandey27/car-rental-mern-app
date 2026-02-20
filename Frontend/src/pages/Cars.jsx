@@ -17,7 +17,7 @@ function Cars() {
   useEffect(() => {
     const fetchSearch = async () => {
       try {
-        const response = await api.post("/api/v1/car/searchCar", { search });
+        const response = await api.post("/v1/car/searchCar", { search });
 
         if (response?.data?.success) {
           setFilteredCars(response.data.data);

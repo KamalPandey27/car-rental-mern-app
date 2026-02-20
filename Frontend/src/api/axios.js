@@ -53,7 +53,7 @@ api.interceptors.response.use(
       isRefreshing = true;
 
       try {
-        await api.get("/api/v1/user/getUserData");
+        await api.get("/v1/user/getUserData");
 
         processQueue(null);
         return api(originalRequest);

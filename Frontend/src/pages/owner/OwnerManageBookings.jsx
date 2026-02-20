@@ -17,7 +17,7 @@ function OwnerManageBookings() {
   const HandleStatusCar = async (carId, status) => {
     setLoading(true);
     try {
-      await api.post("/api/v1/carbooking/CarStatus", {
+      await api.post("/v1/carbooking/CarStatus", {
         carId,
         status,
       });

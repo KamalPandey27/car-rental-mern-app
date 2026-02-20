@@ -35,7 +35,6 @@ const App = () => {
         <Route path="car-details/:id" element={<CarDetails />} />
         <Route path="/payment" element={<PaymentPage />} />
         {/* OWNER DASHBOARD (NESTED ROUTES) */}
-
         <Route path="owner" element={<DashboardLayout />}>
           <Route index element={<OwnerDashboard />} />
           <Route path="add-car" element={<AddCar />} />

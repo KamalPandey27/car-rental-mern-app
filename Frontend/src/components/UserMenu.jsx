@@ -13,7 +13,7 @@ function UserMenu({ showUserMenu, setshowUserMenu }) {
   const handleLogout = async () => {
     try {
       setLoggingOut(true);
-      await api.post(`/api/v1/user/logout`);
+      await api.post(`/v1/user/logout`);
       setUser(null);
       setshowUserMenu(false);
       toast.success("Logout successful!");

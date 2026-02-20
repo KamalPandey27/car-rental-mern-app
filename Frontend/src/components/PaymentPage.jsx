@@ -44,7 +44,7 @@ const PaymentPage = () => {
     setLoading(true);
 
     try {
-      await api.post("/api/v1/carbooking/bookCar", {
+      await api.post("/v1/carbooking/bookCar", {
         pickupDate,
         returnDate,
         location,

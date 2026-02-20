@@ -23,7 +23,7 @@ function SignUp({ onClose }) {
     try {
       setloginSignUploading(true);
 
-      const url = loginPage ? "/api/v1/user/login" : "/api/v1/user/signup";
+      const url = loginPage ? "/v1/user/login" : "/v1/user/signup";
       const response = await api.post(`${url}`, formData);
 
       if (response.data.success === true) {

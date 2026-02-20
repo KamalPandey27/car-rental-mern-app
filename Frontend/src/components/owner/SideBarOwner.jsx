@@ -19,7 +19,7 @@ function SideBarOwner() {
     formData.append("avatar", selectedFile);
 
     try {
-      const response = await api.patch("/api/v1/user/AddUserAvatar", formData);
+      const response = await api.patch("/v1/user/AddUserAvatar", formData);
 
       if (response?.data?.success) {
         setUser(response.data.data);
