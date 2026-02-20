@@ -20,7 +20,7 @@ function ForgetPassword({ setForgetPassword }) {
       return;
     }
     try {
-      const response = await api.post("/api/v1/user/forgetPassword", { email });
+      const response = await api.post("/v1/user/forgetPassword", { email });
 
       if (response.data.success) {
         setResetPassword(true);
@@ -43,7 +43,7 @@ function ForgetPassword({ setForgetPassword }) {
     }
 
     try {
-      const response = await api.post("/api/v1/user/resetPassword", {
+      const response = await api.post("/v1/user/resetPassword", {
         email,
         otp: OTP,
         newPassword,
