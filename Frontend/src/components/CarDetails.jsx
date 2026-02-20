@@ -18,12 +18,13 @@ function CarDetails() {
 
   useEffect(() => {
     fetchCars();
-  });
+  }, [fetchCars]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!user) {
-      toast.error("Please login to book the car");
+      toast.error("Please login to book the car"
+      );
       setShowSignUp(true);
       return;
     }

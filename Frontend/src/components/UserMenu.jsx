@@ -7,9 +7,11 @@ import Loader from "../components/Loader";
 import api from "../api/axios";
 import { toast } from "react-toastify";
 function UserMenu({ showUserMenu, setshowUserMenu }) {
+  
   const { user, setUser, fetchUserBookings } = useContext(AuthContext);
   const [loggingOut, setLoggingOut] = useState(false);
   const [showForgetPassword, setForgetPassword] = useState(false);
+
   const handleLogout = async () => {
     try {
       setLoggingOut(true);

@@ -15,6 +15,7 @@ import {
   createRoutesFromElements,
   Route,
 } from "react-router-dom";
+
 import CarDetails from "./components/CarDetails";
 import Loader from "./components/Loader";
 import { useContext } from "react";
@@ -42,6 +43,7 @@ const App = () => {
           <Route path="manage-bookings" element={<OwnerManageBookings />} />
         </Route>
       </Route>,
+      
     ),
   );
   return <RouterProvider router={router} />;

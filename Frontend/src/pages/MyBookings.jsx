@@ -7,6 +7,7 @@ function MyBookings() {
   useEffect(() => {
     fetchUserBookings();
   }, [fetchUserBookings]);
+  
   return (
     <>
       <section className=" w-full sm:p-20 p-8 my-15 pt-18.25 bg-light">
