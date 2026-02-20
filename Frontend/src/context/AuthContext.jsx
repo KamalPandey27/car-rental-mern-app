@@ -12,22 +12,22 @@ export const AuthProvider = ({ children }) => {
   const [showSignUp, setShowSignUp] = useState(false);
 
   const fetchCars = async () => {
-    const res = await api.get("/api/v1/car/getAllCars");
+    const res = await api.get("/v1/car/getAllCars");
     setCars(res.data.data);
   };
 
   const fetchUserBookings = async () => {
-    const res = await api.get("/api/v1/carbooking/getCoustomerBookings");
+    const res = await api.get("/v1/carbooking/getCoustomerBookings");
     setBookingCar(res.data.data);
   };
 
   const fetchOwnerBookings = async () => {
-    const res = await api.get("/api/v1/carbooking/ownerBookingCar");
+    const res = await api.get("/v1/carbooking/ownerBookingCar");
     setOwnerBookingCar(res.data.data);
   };
 
   const fetchUserData = async () => {
-    const res = await api.get("/api/v1/user/getUserData");
+    const res = await api.get("/v1/user/getUserData");
     setUser(res.data.data);
   };
 
