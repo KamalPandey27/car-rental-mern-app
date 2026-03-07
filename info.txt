@@ -1,0 +1,42 @@
+create()
+save()
+
+find()
+findOne()
+findById()
+
+findByIdAndUpdate()
+const car = await Car.findByIdAndUpdate(
+    carId,
+    { isListed: isListed },
+    { new: true, runValidators: true },
+  );
+updateOne()
+
+findByIdAndDelete()
+deleteOne()
+
+populate()
+select()
+sort()
+limit()
+
+
+
+
+<---- operator ---->
+Operator	Purpose
+$set	update field
+$unset	remove field
+$inc	increase number
+$push	add item to array
+$pull	remove item from array
+$addToSet	add item without duplicate
+
+<------ Read Operator ----->
+$gt
+$lt
+$in
+$or
+$and
+$ne
