@@ -23,7 +23,7 @@ function Home() {
         {/* Hero section  */}
         <Hero />
         {/* Featured cars section */}
-        <section className="flex flex-col items-center px-6 md:px-16 lg:px-24 xl:px-32">
+        <section className="flex flex-col items-center px-6 md:px-16 lg:px-24 xl:px-32 mt-10">
           <div className="flex flex-col gap-2 justify-center items-center">
             <h2 className="font-semibold text-4xl md:text-[40px]">
               Featured Vehicles
@@ -33,7 +33,10 @@ function Home() {
               adventure.
             </span>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-18">
+          <div
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-18"
+            data-aos="fade-up"
+          >
             {cars?.slice(0, 6)?.map((item, index) => (
               <CarCard key={index} item={item} />
             ))}
@@ -47,8 +50,11 @@ function Home() {
         </section>
         {/* reviews section */}
 
-        <section className=" flex flex-col md:flex-row md:items-start items-center justify-between px-8 md:pl-14 md:pb-10 mb-auto pt-10 bg-linear-to-r from-[#0558FE] to-[#A9CFFF] max-w-6xl mx-3 md:mx-auto rounded-2xl overflow-hidden md:mt-20 my-10">
-          <div className="text-white flex flex-col gap-2 items-start">
+        <section
+          data-aos="fade-up"
+          className=" flex flex-col md:flex-row md:items-start items-center justify-between px-8 md:pl-14 md:pb-10 mb-auto pt-10 bg-linear-to-r from-[#0558FE] to-[#A9CFFF] max-w-6xl mx-3 md:mx-auto rounded-2xl overflow-hidden md:mt-20 my-10"
+        >
+          <div className="text-white flex flex-col gap-2 items-start ">
             <h2 className="text-3xl font-medium">Do You Own a Luxury Car?</h2>
             <p className="mt-2">
               Monetize your vehicle effortlessly by listing it on CarRental.
@@ -85,7 +91,10 @@ function Home() {
             </span>
           </div>
           <div className=" grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-5 sm:mx-20 mx-10">
-            <div className="  cursor-pointer rounded-lg shadow-lg p-5 lg:max-w-90 sm:max-w-100 w-full flex flex-col gap-5 transition-all ease-in-out duration-500 hover:-translate-y-1">
+            <div
+              data-aos="fade-left"
+              className="  cursor-pointer rounded-lg shadow-lg p-5 lg:max-w-90 sm:max-w-100 w-full flex flex-col gap-5 transition-all ease-in-out duration-500 hover:-translate-y-1"
+            >
               <div className="flex gap-5 items-center">
                 <img
                   src={assets.testimonial_image_2}
@@ -109,7 +118,10 @@ function Home() {
                 with CarRental was exceptional."
               </div>
             </div>
-            <div className=" rounded-2xl shadow-lg p-5 lg:max-w-90 max-w-100 flex flex-col gap-5 transition-all ease-in-out duration-500 hover:-translate-y-1 cursor-pointer">
+            <div
+              data-aos="fade-left"
+              className=" rounded-2xl shadow-lg p-5 lg:max-w-90 max-w-100 flex flex-col gap-5 transition-all ease-in-out duration-500 hover:-translate-y-1 cursor-pointer"
+            >
               <div className="flex gap-5 items-center">
                 <img
                   src={assets.testimonial_image_1}
@@ -133,7 +145,10 @@ function Home() {
                 right to my door, and the customer service was fantastic!"
               </div>
             </div>
-            <div className=" rounded-2xl shadow-lg p-5 lg:max-w-90 max-w-100 flex flex-col gap-5 transition-all ease-in-out duration-500 hover:-translate-y-1 cursor-pointer">
+            <div
+              data-aos="fade-left"
+              className=" rounded-2xl shadow-lg p-5 lg:max-w-90 max-w-100 flex flex-col gap-5 transition-all ease-in-out duration-500 hover:-translate-y-1 cursor-pointer"
+            >
               <div className="flex gap-5 items-center">
                 <img
                   src={assets.testimonial_image_2}
@@ -163,7 +178,10 @@ function Home() {
 
         {/* Never Miss a Deal! */}
 
-        <section className="flex flex-col gap-3 items-center justify-center min-h-90 mx-10 ">
+        <section
+          className="flex flex-col gap-3 items-center justify-center min-h-90 mx-10  "
+          data-aos="fade-up"
+        >
           <h2 className="md:text-2xl text-xl ">Never Miss a Deal!</h2>
           <p className="text-gray-500/90">
             Subscribe to get the latest offers, new arrivals, and exclusive

@@ -37,7 +37,7 @@ function Cars() {
 
   return (
     <>
-      <section className="flex flex-col  w-full pt-18.25">
+      <section className="flex flex-col  w-full pt-18.25 " data-aos="fade-up">
         <div className="flex flex-col items-center py-20 bg-light max-md:px-4 w-full gap-4">
           <div className="font-semibold text-4xl md:text-[40px] text-center">
             Available Cars

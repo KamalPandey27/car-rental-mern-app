@@ -7,10 +7,13 @@ function MyBookings() {
   useEffect(() => {
     fetchUserBookings();
   }, [fetchUserBookings]);
-  
+
   return (
     <>
-      <section className=" w-full sm:p-20 p-8 my-15 pt-18.25 bg-light">
+      <section
+        className=" w-full sm:p-20 p-8 my-15 pt-18.25 bg-light"
+        data-aos="fade-up"
+      >
         <div className="flex flex-col gap-5">
           <h1 className="text-4xl font-semibold text-center">My Bookings</h1>
           <p className="text-gray-500/90 text-center">

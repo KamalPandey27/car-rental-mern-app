@@ -150,7 +150,12 @@ function Hero() {
             Search
           </button>
         </form>
-        <img src={assets.main_car} alt="main_car" className="max-h-75 w-auto" />
+        <img
+          src={assets.main_car}
+          alt="main_car"
+          className="max-h-75 w-auto"
+          data-aos="fade-up"
+        />
       </section>
     </>
   );
