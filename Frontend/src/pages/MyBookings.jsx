@@ -10,17 +10,14 @@ function MyBookings() {
 
   return (
     <>
-      <section
-        className=" w-full sm:p-20 p-8 my-15 pt-18.25 bg-light"
-        data-aos="fade-up"
-      >
-        <div className="flex flex-col gap-5">
+      <section className=" w-full sm:p-20 p-8 my-15 pt-18.25 bg-light">
+        <div className="flex flex-col gap-5" data-aos="fade-up">
           <h1 className="text-4xl font-semibold text-center">My Bookings</h1>
           <p className="text-gray-500/90 text-center">
             View and manage your all car bookings
           </p>
         </div>
-        <div className="flex flex-col gap-5 mt-10">
+        <div className="flex flex-col gap-5 mt-10" data-aos="fade-up">
           {user &&
             bookingCar
               ?.slice()
